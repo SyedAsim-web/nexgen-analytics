@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NexGen — Analytics Platform
 
-## Getting Started
+Multi-platform analytics dashboard: Google Search Console, GA4, GHL Voice AI & Gravity Forms.
 
-First, run the development server:
+## Features
+
+- 🔐 **Google OAuth login** — sign in with your Google account
+- 🌐 **Multi-website management** — add unlimited websites
+- 👥 **Team collaboration** — invite teammates with role-based access (admin/editor/viewer)
+- 🔍 **Real GSC data** — live clicks, impressions, CTR, keywords from Google Search Console API
+- 📈 **Real GA4 data** — live sessions, users, conversions, devices from GA4 API
+- 🤖 **GHL Voice AI** — call analytics and lead pipeline
+- 📋 **Gravity Forms** — form submission tracking
+- 📊 **Presentation builder** — generate PDF reports per website
+- 🌓 **Dark / Light theme** toggle
+
+## Setup
+
+### 1. Clone and install
+
+```bash
+git clone https://github.com/SyedAsim-web/siteiq.git
+cd siteiq
+npm install
+```
+
+### 2. Set up Supabase
+
+1. Go to [supabase.com](https://supabase.com) and create a free project
+2. Go to **SQL Editor** and run the contents of `supabase-schema.sql`
+3. Copy your **Project URL** and **API keys** from Settings → API
+
+### 3. Set up Google OAuth
+
+1. Go to [console.cloud.google.com](https://console.cloud.google.com)
+2. Create a new project or select existing
+3. Go to **APIs & Services → Library** and enable:
+   - **Google Search Console API**
+   - **Google Analytics Data API**
+4. Go to **APIs & Services → Credentials → Create Credentials → OAuth 2.0 Client ID**
+5. Application type: **Web application**
+6. Authorised redirect URIs: `http://localhost:3000/api/auth/callback/google`
+7. Copy Client ID and Client Secret
+
+### 4. Configure environment
+
+```bash
+cp .env.example .env.local
+```
+
+Fill in `.env.local`:
+```
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=run: openssl rand -base64 32
+
+GOOGLE_CLIENT_ID=your-client-id
+GOOGLE_CLIENT_SECRET=your-client-secret
+
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+```
+
+### 5. Run
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment (Vercel)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Push to GitHub
+2. Import project in [vercel.com](https://vercel.com)
+3. Add all environment variables
+4. Update Google OAuth redirect URI to your production domain
+5. Deploy
 
-## Learn More
+## Connecting your data
 
-To learn more about Next.js, take a look at the following resources:
+After signing in:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Click **Add Website** and enter your domain
+2. Go to the site → **Integrations** tab
+3. For **GSC**: enter your property URL from Search Console
+4. For **GA4**: enter your Property ID (numbers only) and Measurement ID (G-XXXXX)
+5. Click **Connect** — NexGen uses your signed-in Google account to fetch real data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js 15** (App Router)
+- **NextAuth v5** (Google OAuth)
+- **Supabase** (database + row-level security)
+- **TypeScript**
+- **Tailwind CSS**
+- Google Search Console API
+- Google Analytics Data API
