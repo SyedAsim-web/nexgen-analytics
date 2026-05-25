@@ -22,14 +22,19 @@ export default function SiteDetailPage({ project, session, onBack, onPresent, on
   const [teamRole, setTeamRole] = useState('viewer')
   const [teamMsg, setTeamMsg] = useState('')
 
-  const saveIntegration = async (platform: string, config: any) => {
+const saveIntegration = async (platform: string, config: any) => {
     setSaving(platform)
     try {
       const res = await fetch('/api/integrations', {
         method: 'PUT', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ projectId: project.id, platform, config }),
       })
-      if (res.ok) { onRefresh() }
+      const data = await res.json()
+      if (res.ok) {
+        project.integrations = data.integrations
+        onRefresh()
+        setSaving('')
+      }
     } catch (e) {} finally { setSaving('') }
   }
 
