@@ -149,9 +149,14 @@ export default function GravityPage({ projects }: Props) {
                           </div>
                         </td>
                         <td style={{ padding: '12px 16px' }}>
-                          <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 10, background: form.is_active === '1' ? 'rgba(34,211,160,0.1)' : 'rgba(245,101,101,0.1)', color: form.is_active === '1' ? '#22d3a0' : '#f56565' }}>
-                            {form.is_active === '1' ? '● Active' : '● Inactive'}
-                          </span>
+                          {(() => {
+                            const active = form.is_active === '1' || form.is_active === true || form.is_active === 1
+                            return (
+                              <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 10, background: active ? 'rgba(34,211,160,0.1)' : 'rgba(245,101,101,0.1)', color: active ? '#22d3a0' : '#f56565' }}>
+                                {active ? '● Active' : '● Inactive'}
+                              </span>
+                            )
+                          })()}
                         </td>
                         <td style={{ padding: '12px 16px' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
