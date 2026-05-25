@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Session } from 'next-auth'
 import { Project } from '@/types'
 
@@ -27,8 +27,7 @@ export default function PresentationPage({ project, projects, session, onSelectP
   const [gravityData, setGravityData] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   const [activeSlide, setActiveSlide] = useState(0)
-  const [presenting, setPresenting] = useState(false)
-  const printRef = useRef<HTMLDivElement>(null)
+  const [printMode, setPrintMode] = useState(false)
 
   const selectedProject = projects.find(p => p.id === selectedId) || null
 
@@ -93,7 +92,11 @@ export default function PresentationPage({ project, projects, session, onSelectP
   slides.push({ id: 'summary', label: 'Summary' })
 
   const handlePrint = () => {
-    window.print()
+    setPrintMode(true)
+    setTimeout(() => {
+      window.print()
+      setTimeout(() => setPrintMode(false), 500)
+    }, 350)
   }
 
   const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -261,13 +264,55 @@ export default function PresentationPage({ project, projects, session, onSelectP
         </div>
       </div>
 
-      {/* Print stylesheet */}
+      {/* Print overlay — hidden normally, each slide fills one landscape page */}
+      {printMode && (
+        <div className="nexgen-print-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 9999, background: '#0f111a', overflow: 'hidden' }}>
+          {slides.map((s) => (
+            <div key={s.id} className="nexgen-print-slide">
+              <SlideRenderer
+                slideId={s.id}
+                project={selectedProject}
+                ga4Data={ga4Data}
+                gscData={gscData}
+                ghlData={ghlData}
+                gravityData={gravityData}
+                days={days}
+                today={today}
+                session={session}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Print styles ── */
         @media print {
-          body * { visibility: hidden !important; }
-          .print-slide, .print-slide * { visibility: visible !important; }
-          .print-slide { position: fixed !important; top: 0; left: 0; width: 100vw; height: 100vh; page-break-after: always; }
+          @page { size: landscape; margin: 0; }
+
+          /* Hide everything on the page */
+          body { visibility: hidden; }
+
+          /* Show only the print overlay and its children */
+          .nexgen-print-overlay { visibility: visible !important; position: fixed !important; top: 0; left: 0; width: 100vw; height: auto !important; overflow: visible !important; z-index: 9999; }
+          .nexgen-print-overlay * { visibility: visible !important; }
+
+          /* Each slide = one landscape page */
+          .nexgen-print-slide {
+            width: 100vw;
+            height: 100vh;
+            page-break-after: always;
+            break-after: page;
+            overflow: hidden;
+            display: block;
+          }
+          .nexgen-print-slide > * {
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 0 !important;
+          }
         }
       `}</style>
     </div>
