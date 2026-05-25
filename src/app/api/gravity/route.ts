@@ -11,6 +11,9 @@ export async function GET(req: NextRequest) {
   const consumerKey = searchParams.get('consumerKey')
   const consumerSecret = searchParams.get('consumerSecret')
 
+  const startDate = searchParams.get('startDate') // YYYY-MM-DD
+  const endDate = searchParams.get('endDate')     // YYYY-MM-DD
+
   if (!siteUrl || !consumerKey || !consumerSecret) {
     return NextResponse.json({ error: 'siteUrl, consumerKey and consumerSecret are required' }, { status: 400 })
   }
@@ -18,6 +21,10 @@ export async function GET(req: NextRequest) {
   try {
     const baseUrl = siteUrl.replace(/\/$/, '')
     const auth = `consumer_key=${encodeURIComponent(consumerKey)}&consumer_secret=${encodeURIComponent(consumerSecret)}`
+    const dateParams = [
+      startDate ? `start_date=${encodeURIComponent(startDate)}` : '',
+      endDate   ? `end_date=${encodeURIComponent(endDate)}`     : '',
+    ].filter(Boolean).join('&')
 
     // Fetch forms
     const formsRes = await fetch(`${baseUrl}/wp-json/gf/v2/forms?${auth}`, {
@@ -36,7 +43,8 @@ export async function GET(req: NextRequest) {
       Promise.all(
         formsList.map(async (form: any) => {
           try {
-            const r = await fetch(`${baseUrl}/wp-json/gf/v2/entries?form_ids[]=${form.id}&paging[page_size]=1&${auth}`)
+            const q = dateParams ? `&${dateParams}` : ''
+            const r = await fetch(`${baseUrl}/wp-json/gf/v2/entries?form_ids[]=${form.id}&paging[page_size]=1&${auth}${q}`)
             const d = await r.json()
             return { id: form.id, title: form.title, total_count: d.total_count || 0, is_active: form.is_active, date_created: form.date_created }
           } catch {
@@ -44,17 +52,17 @@ export async function GET(req: NextRequest) {
           }
         })
       ),
-      // Active count
-      fetch(`${baseUrl}/wp-json/gf/v2/entries?status=active&paging[page_size]=1&${auth}`)
+      // Active count (scoped to date range)
+      fetch(`${baseUrl}/wp-json/gf/v2/entries?status=active&paging[page_size]=1&${auth}${dateParams ? `&${dateParams}` : ''}`)
         .then(r => r.json()).then(d => d.total_count || 0).catch(() => 0),
-      // Spam count
-      fetch(`${baseUrl}/wp-json/gf/v2/entries?status=spam&paging[page_size]=1&${auth}`)
+      // Spam count (scoped to date range)
+      fetch(`${baseUrl}/wp-json/gf/v2/entries?status=spam&paging[page_size]=1&${auth}${dateParams ? `&${dateParams}` : ''}`)
         .then(r => r.json()).then(d => d.total_count || 0).catch(() => 0),
-      // Trash count
-      fetch(`${baseUrl}/wp-json/gf/v2/entries?status=trash&paging[page_size]=1&${auth}`)
+      // Trash count (scoped to date range)
+      fetch(`${baseUrl}/wp-json/gf/v2/entries?status=trash&paging[page_size]=1&${auth}${dateParams ? `&${dateParams}` : ''}`)
         .then(r => r.json()).then(d => d.total_count || 0).catch(() => 0),
-      // Fetch last 50 entries across ALL statuses
-      fetch(`${baseUrl}/wp-json/gf/v2/entries?paging[page_size]=50&sorting[key]=date_created&sorting[direction]=DESC&${auth}`)
+      // Last 50 entries across ALL statuses (scoped to date range)
+      fetch(`${baseUrl}/wp-json/gf/v2/entries?paging[page_size]=50&sorting[key]=date_created&sorting[direction]=DESC&${auth}${dateParams ? `&${dateParams}` : ''}`)
         .then(r => r.json()).catch(() => ({ entries: [] })),
     ])
 

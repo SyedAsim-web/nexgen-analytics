@@ -5,6 +5,34 @@ import { Project } from '@/types'
 interface Props { projects: Project[] }
 
 type StatusFilter = 'all' | 'active' | 'spam' | 'trash'
+type Period = 'this_month' | 'last_month' | '3_months' | '6_months' | 'all'
+
+const PERIODS: { value: Period; label: string }[] = [
+  { value: 'this_month',  label: 'This Month' },
+  { value: 'last_month',  label: 'Last Month' },
+  { value: '3_months',    label: 'Last 3 Months' },
+  { value: '6_months',    label: 'Last 6 Months' },
+  { value: 'all',         label: 'All Time' },
+]
+
+function getPeriodDates(period: Period): { startDate?: string; endDate?: string } {
+  const fmt = (d: Date) => d.toISOString().split('T')[0]
+  const now = new Date()
+  if (period === 'all') return {}
+  if (period === 'this_month') {
+    return { startDate: fmt(new Date(now.getFullYear(), now.getMonth(), 1)), endDate: fmt(now) }
+  }
+  if (period === 'last_month') {
+    const start = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+    const end   = new Date(now.getFullYear(), now.getMonth(), 0)
+    return { startDate: fmt(start), endDate: fmt(end) }
+  }
+  if (period === '3_months') {
+    return { startDate: fmt(new Date(now.getFullYear(), now.getMonth() - 3, now.getDate())), endDate: fmt(now) }
+  }
+  // 6_months
+  return { startDate: fmt(new Date(now.getFullYear(), now.getMonth() - 6, now.getDate())), endDate: fmt(now) }
+}
 
 const STATUS_CONFIG: Record<string, { label: string; bg: string; color: string }> = {
   active:  { label: 'Active',  bg: 'rgba(34,211,160,0.1)',   color: '#22d3a0' },
@@ -34,21 +62,23 @@ export default function GravityPage({ projects }: Props) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [period, setPeriod] = useState<Period>('all')
 
-  const fetchData = async (projectId: string) => {
+  const fetchData = async (projectId: string, p_period: Period = period) => {
     const p = projects.find(x => x.id === projectId)
     if (!p?.integrations?.gravity?.site_url) return
-    setLoading(true); setError(''); setData(null)
+    setLoading(true); setError(''); setData(null); setStatusFilter('all')
     try {
+      const dates = getPeriodDates(p_period)
       const params = new URLSearchParams({
         siteUrl: p.integrations.gravity.site_url,
         ...(p.integrations.gravity.consumer_key && {
           consumerKey: p.integrations.gravity.consumer_key,
           consumerSecret: p.integrations.gravity.consumer_secret || '',
         }),
-        ...(p.integrations.gravity.api_key && {
-          apiKey: p.integrations.gravity.api_key,
-        }),
+        ...(p.integrations.gravity.api_key && { apiKey: p.integrations.gravity.api_key }),
+        ...(dates.startDate && { startDate: dates.startDate }),
+        ...(dates.endDate   && { endDate:   dates.endDate   }),
       })
       const res = await fetch(`/api/gravity?${params}`)
       const json = await res.json()
@@ -57,7 +87,7 @@ export default function GravityPage({ projects }: Props) {
     } catch (e: any) { setError(e.message) } finally { setLoading(false) }
   }
 
-  useEffect(() => { if (selected) fetchData(selected) }, [selected])
+  useEffect(() => { if (selected) fetchData(selected, period) }, [selected, period]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Filtered entries based on active tab
   const allEntries: any[] = data?.entries || []
@@ -85,12 +115,18 @@ export default function GravityPage({ projects }: Props) {
             Real form submission data from your WordPress sites
           </p>
         </div>
-        {gravityProjects.length > 0 && (
-          <select value={selected} onChange={e => { setSelected(e.target.value); setStatusFilter('all') }}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <select value={period} onChange={e => setPeriod(e.target.value as Period)}
             style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
-            {gravityProjects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+            {PERIODS.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
           </select>
-        )}
+          {gravityProjects.length > 0 && (
+            <select value={selected} onChange={e => setSelected(e.target.value)}
+              style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+              {gravityProjects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+            </select>
+          )}
+        </div>
       </div>
 
       {/* Not connected */}
