@@ -13,12 +13,20 @@ export default function GravityPage({ projects }: Props) {
 
   const fetchData = async (projectId: string) => {
     const p = projects.find(x => x.id === projectId)
-    if (!p?.integrations?.gravity?.site_url || !p?.integrations?.gravity?.api_key) return
+    if (!p?.integrations?.gravity?.site_url) return
     setLoading(true); setError(''); setData(null)
     try {
-      const res = await fetch(
-        `/api/gravity?siteUrl=${encodeURIComponent(p.integrations.gravity.site_url)}&apiKey=${encodeURIComponent(p.integrations.gravity.api_key)}`
-      )
+      const params = new URLSearchParams({
+        siteUrl: p.integrations.gravity.site_url,
+        ...(p.integrations.gravity.consumer_key && {
+          consumerKey: p.integrations.gravity.consumer_key,
+          consumerSecret: p.integrations.gravity.consumer_secret || '',
+        }),
+        ...(p.integrations.gravity.api_key && {
+          apiKey: p.integrations.gravity.api_key,
+        }),
+      })
+      const res = await fetch(`/api/gravity?${params}`)
       const json = await res.json()
       if (!res.ok) { setError(json.error || 'Failed to load'); return }
       setData(json)

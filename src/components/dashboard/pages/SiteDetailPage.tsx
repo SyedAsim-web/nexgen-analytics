@@ -17,6 +17,8 @@ export default function SiteDetailPage({ project, session, onBack, onPresent, on
     ghl_key: project.integrations?.ghl?.api_key || '',
     wp_url: project.integrations?.gravity?.site_url || '',
     wp_key: project.integrations?.gravity?.api_key || '',
+    wp_ck: project.integrations?.gravity?.consumer_key || '',
+    wp_cs: project.integrations?.gravity?.consumer_secret || '',
   })
   const [teamEmail, setTeamEmail] = useState('')
   const [teamRole, setTeamRole] = useState('viewer')
@@ -180,13 +182,19 @@ const saveIntegration = async (platform: string, config: any) => {
             description="Connect Gravity Forms to track form submissions, completion rates and abandonment across all forms on your WordPress site."
             fields={[
               { key: 'wp_url', label: 'WordPress Site URL', placeholder: 'https://yoursite.com' },
-              { key: 'wp_key', label: 'Gravity Forms API Key', placeholder: 'Your GF API Key', type: 'password' },
+              { key: 'wp_ck', label: 'Consumer Key', placeholder: 'ck_xxxxxxxxxxxxxxxxxx' },
+              { key: 'wp_cs', label: 'Consumer Secret', placeholder: 'cs_xxxxxxxxxxxxxxxxxx', type: 'password' },
             ]}
             form={integForm}
             setForm={setIntegForm}
             saving={saving === 'gravity'}
-            onSave={() => saveIntegration('gravity', { site_url: integForm.wp_url, api_key: integForm.wp_key })}
-            helpText="WordPress → Forms → Settings → REST API → Add Key. Copy the Public Key."
+            onSave={() => saveIntegration('gravity', {
+              site_url: integForm.wp_url,
+              consumer_key: integForm.wp_ck,
+              consumer_secret: integForm.wp_cs,
+              api_key: `${integForm.wp_ck}:${integForm.wp_cs}`
+            })}
+            helpText="WordPress → Forms → Settings → REST API → Add Key → copy Consumer Key (ck_) and Consumer Secret (cs_) separately."
           />
         </div>
       )}

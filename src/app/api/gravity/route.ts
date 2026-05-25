@@ -9,15 +9,21 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const siteUrl = searchParams.get('siteUrl')
   const apiKey = searchParams.get('apiKey')
+  const consumerKey = searchParams.get('consumerKey')
+  const consumerSecret = searchParams.get('consumerSecret')
 
-  if (!siteUrl || !apiKey) {
-    return NextResponse.json({ error: 'siteUrl and apiKey required' }, { status: 400 })
+  const authKey = consumerKey && consumerSecret
+    ? `${consumerKey}:${consumerSecret}`
+    : apiKey
+
+  if (!siteUrl || !authKey) {
+    return NextResponse.json({ error: 'siteUrl and apiKey (or consumerKey + consumerSecret) required' }, { status: 400 })
   }
 
   try {
     const baseUrl = siteUrl.replace(/\/$/, '')
     const headers = {
-      'Authorization': `Basic ${Buffer.from(apiKey + ':').toString('base64')}`,
+      'Authorization': `Basic ${Buffer.from(authKey + ':').toString('base64')}`,
       'Content-Type': 'application/json',
     }
 
