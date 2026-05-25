@@ -37,10 +37,16 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
   const [ga4Days, setGa4Days] = useState(28)
   const [ga4Data, setGa4Data] = useState<any>(null)
   const [gscData, setGscData] = useState<any>(null)
+  const [ghlData, setGhlData] = useState<any>(null)
+  const [gravityData, setGravityData] = useState<any>(null)
   const [ga4Loading, setGa4Loading] = useState(false)
   const [gscLoading, setGscLoading] = useState(false)
+  const [ghlLoading, setGhlLoading] = useState(false)
+  const [gravityLoading, setGravityLoading] = useState(false)
   const [ga4Error, setGa4Error] = useState('')
   const [gscError, setGscError] = useState('')
+  const [ghlError, setGhlError] = useState('')
+  const [gravityError, setGravityError] = useState('')
 
   // Set default selection once projects load
   useEffect(() => {
@@ -75,6 +81,37 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
       .then(json => { if (json.error) setGscError(json.error); else setGscData(json) })
       .catch(e => setGscError(e.message))
       .finally(() => setGscLoading(false))
+  }, [selectedId]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Fetch GHL data when site changes
+  useEffect(() => {
+    if (!selectedProject?.integrations?.ghl?.connected) { setGhlData(null); return }
+    const { location_id, api_key } = selectedProject.integrations.ghl
+    if (!location_id || !api_key) return
+    setGhlLoading(true); setGhlError(''); setGhlData(null)
+    fetch(`/api/ghl?locationId=${encodeURIComponent(location_id)}&apiKey=${encodeURIComponent(api_key)}`)
+      .then(r => r.json())
+      .then(json => { if (json.error) setGhlError(json.error); else setGhlData(json) })
+      .catch(e => setGhlError(e.message))
+      .finally(() => setGhlLoading(false))
+  }, [selectedId]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Fetch Gravity Forms data when site changes
+  useEffect(() => {
+    if (!selectedProject?.integrations?.gravity?.connected) { setGravityData(null); return }
+    const g = selectedProject.integrations.gravity
+    if (!g.site_url || !g.consumer_key || !g.consumer_secret) return
+    setGravityLoading(true); setGravityError(''); setGravityData(null)
+    const params = new URLSearchParams({
+      siteUrl: g.site_url,
+      consumerKey: g.consumer_key,
+      consumerSecret: g.consumer_secret,
+    })
+    fetch(`/api/gravity?${params}`)
+      .then(r => r.json())
+      .then(json => { if (json.error) setGravityError(json.error); else setGravityData(json) })
+      .catch(e => setGravityError(e.message))
+      .finally(() => setGravityLoading(false))
   }, [selectedId]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return (
@@ -363,19 +400,44 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
                 <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22d3a0' }} />
                 <span style={{ fontSize: 13, fontWeight: 700, color: '#22d3a0' }}>GHL Connected</span>
               </div>
-              <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 4 }}>Location ID</div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', fontFamily: 'monospace', marginBottom: 16 }}>{ghl.location_id || '—'}</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
-                {['Total Calls', 'Booked', 'Qualified'].map(l => (
-                  <div key={l} style={{ background: 'var(--bg3)', borderRadius: 8, padding: '10px 12px', textAlign: 'center' }}>
-                    <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 18, fontWeight: 700, color: 'var(--text3)' }}>—</div>
-                    <div style={{ fontSize: 10, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: 3 }}>{l}</div>
+              {ghlLoading && <ChartSkeleton label="Loading GHL data…" />}
+              {ghlError && <ErrorBox msg={ghlError} />}
+              {ghlData && (
+                <>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 12 }}>
+                    {[
+                      { label: 'Contacts', value: ghlData.summary.totalContacts, color: '#22d3a0' },
+                      { label: 'Conversations', value: ghlData.summary.totalConversations, color: '#5b7fff' },
+                      { label: 'Voice Calls', value: ghlData.summary.totalCalls, color: '#f0b429' },
+                    ].map(s => (
+                      <div key={s.label} style={{ background: 'var(--bg3)', borderRadius: 8, padding: '10px 12px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+                        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: s.color }} />
+                        <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', lineHeight: 1, marginBottom: 4 }}>{fmtN(s.value)}</div>
+                        <div style={{ fontSize: 10, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-              <div style={{ marginTop: 14, fontSize: 12, color: 'var(--text3)', background: 'rgba(34,211,160,0.06)', borderRadius: 8, padding: '8px 12px' }}>
-                ⚡ Live call data sync coming soon
-              </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 6 }}>
+                    {[
+                      { label: 'New', value: ghlData.pipeline.new, color: '#5b7fff' },
+                      { label: 'Contacted', value: ghlData.pipeline.contacted, color: '#f0b429' },
+                      { label: 'Qualified', value: ghlData.pipeline.qualified, color: '#2dd4bf' },
+                      { label: 'Booked', value: ghlData.pipeline.booked, color: '#22d3a0' },
+                      { label: 'Lost', value: ghlData.pipeline.lost, color: '#f56565' },
+                    ].map(s => (
+                      <div key={s.label} style={{ background: 'var(--bg3)', borderRadius: 6, padding: '8px 4px', textAlign: 'center' }}>
+                        <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 16, fontWeight: 700, color: s.color }}>{s.value}</div>
+                        <div style={{ fontSize: 9, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+              {!ghlLoading && !ghlError && !ghlData && (
+                <div style={{ fontSize: 12, color: 'var(--text3)', background: 'rgba(34,211,160,0.06)', borderRadius: 8, padding: '8px 12px' }}>
+                  No data available — check your API key and Location ID.
+                </div>
+              )}
             </div>
           )}
         </section>
@@ -399,19 +461,36 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
                 <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#9f7aea' }} />
                 <span style={{ fontSize: 13, fontWeight: 700, color: '#9f7aea' }}>Gravity Forms Connected</span>
               </div>
-              <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 4 }}>WordPress URL</div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 16 }}>{gravity.site_url || '—'}</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
-                {['Submissions', 'Completion', 'Abandonment'].map(l => (
-                  <div key={l} style={{ background: 'var(--bg3)', borderRadius: 8, padding: '10px 12px', textAlign: 'center' }}>
-                    <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 18, fontWeight: 700, color: 'var(--text3)' }}>—</div>
-                    <div style={{ fontSize: 10, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: 3 }}>{l}</div>
+              {gravityLoading && <ChartSkeleton label="Loading Gravity Forms data…" />}
+              {gravityError && <ErrorBox msg={gravityError} />}
+              {gravityData && (
+                <>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 12 }}>
+                    {[
+                      { label: 'Total Submissions', value: gravityData.summary.totalSubmissions, color: '#9f7aea' },
+                      { label: 'Active Forms', value: gravityData.summary.activeForms, color: '#22d3a0' },
+                      { label: 'Spam', value: gravityData.summary.statusCounts?.spam ?? 0, color: '#f0b429' },
+                    ].map(s => (
+                      <div key={s.label} style={{ background: 'var(--bg3)', borderRadius: 8, padding: '10px 12px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+                        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: s.color }} />
+                        <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', lineHeight: 1, marginBottom: 4 }}>{s.value}</div>
+                        <div style={{ fontSize: 10, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-              <div style={{ marginTop: 14, fontSize: 12, color: 'var(--text3)', background: 'rgba(159,122,234,0.06)', borderRadius: 8, padding: '8px 12px' }}>
-                ⚡ Live submission data sync coming soon
-              </div>
+                  {gravityData.forms?.slice(0, 3).map((form: any) => (
+                    <div key={form.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '7px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                      <span style={{ fontSize: 12, color: 'var(--text2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '65%' }}>{form.title}</span>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: '#9f7aea' }}>{form.total_count} submissions</span>
+                    </div>
+                  ))}
+                </>
+              )}
+              {!gravityLoading && !gravityError && !gravityData && (
+                <div style={{ fontSize: 12, color: 'var(--text3)', background: 'rgba(159,122,234,0.06)', borderRadius: 8, padding: '8px 12px' }}>
+                  No data available — check your Consumer Key and Secret.
+                </div>
+              )}
             </div>
           )}
         </section>
