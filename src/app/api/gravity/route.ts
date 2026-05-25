@@ -8,40 +8,45 @@ export async function GET(req: NextRequest) {
 
   const { searchParams } = new URL(req.url)
   const siteUrl = searchParams.get('siteUrl')
-  const apiKey = searchParams.get('apiKey')
   const consumerKey = searchParams.get('consumerKey')
   const consumerSecret = searchParams.get('consumerSecret')
 
-  const authKey = consumerKey && consumerSecret
-    ? `${consumerKey}:${consumerSecret}`
-    : apiKey
-
-  if (!siteUrl || !authKey) {
-    return NextResponse.json({ error: 'siteUrl and apiKey (or consumerKey + consumerSecret) required' }, { status: 400 })
+  if (!siteUrl || !consumerKey || !consumerSecret) {
+    return NextResponse.json({ error: 'siteUrl, consumerKey and consumerSecret are required' }, { status: 400 })
   }
 
   try {
     const baseUrl = siteUrl.replace(/\/$/, '')
-    const headers = {
-      'Authorization': `Basic ${Buffer.from(authKey + ':').toString('base64')}`,
-      'Content-Type': 'application/json',
+
+    // Gravity Forms REST API uses query params for authentication
+    const authParams = `consumer_key=${encodeURIComponent(consumerKey)}&consumer_secret=${encodeURIComponent(consumerSecret)}`
+
+    // Test connection first
+    const testRes = await fetch(
+      `${baseUrl}/wp-json/gf/v2/forms?${authParams}`,
+      {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
+
+    if (!testRes.ok) {
+      const err = await testRes.json()
+      return NextResponse.json(
+        { error: `Gravity Forms API error: ${JSON.stringify(err)}` },
+        { status: testRes.status }
+      )
     }
 
-    // Fetch all forms
-    const formsRes = await fetch(`${baseUrl}/wp-json/gf/v2/forms`, { headers })
-    if (!formsRes.ok) {
-      const err = await formsRes.text()
-      return NextResponse.json({ error: `Gravity Forms API error: ${err}` }, { status: formsRes.status })
-    }
-    const forms = await formsRes.json()
+    const forms = await testRes.json()
+    const formsList = Array.isArray(forms) ? forms : Object.values(forms)
 
-    // Fetch entries for each form
+    // Fetch entry counts for each form
     const formStats = await Promise.all(
-      Object.values(forms).map(async (form: any) => {
+      formsList.map(async (form: any) => {
         try {
           const entriesRes = await fetch(
-            `${baseUrl}/wp-json/gf/v2/entries?form_ids=${form.id}&paging[page_size]=1`,
-            { headers }
+            `${baseUrl}/wp-json/gf/v2/entries?form_ids[]=${form.id}&paging[page_size]=1&${authParams}`
           )
           const entriesData = await entriesRes.json()
           return {
@@ -49,27 +54,33 @@ export async function GET(req: NextRequest) {
             title: form.title,
             total_count: entriesData.total_count || 0,
             is_active: form.is_active,
+            date_created: form.date_created,
           }
         } catch (e) {
-          return { id: form.id, title: form.title, total_count: 0, is_active: form.is_active }
+          return {
+            id: form.id,
+            title: form.title,
+            total_count: 0,
+            is_active: form.is_active,
+            date_created: form.date_created,
+          }
         }
       })
     )
 
-    // Fetch recent entries across all forms
+    // Fetch recent entries
     const recentRes = await fetch(
-      `${baseUrl}/wp-json/gf/v2/entries?paging[page_size]=10&sorting[key]=date_created&sorting[direction]=DESC`,
-      { headers }
+      `${baseUrl}/wp-json/gf/v2/entries?paging[page_size]=10&sorting[key]=date_created&sorting[direction]=DESC&${authParams}`
     )
     const recentData = await recentRes.json()
 
-    const totalSubmissions = formStats.reduce((a, f) => a + f.total_count, 0)
+    const totalSubmissions = formStats.reduce((a, f) => a + (f.total_count || 0), 0)
 
     return NextResponse.json({
       summary: {
-        totalForms: formStats.length,
+        totalForms: formsList.length,
         totalSubmissions,
-        activeForms: formStats.filter(f => f.is_active === '1').length,
+        activeForms: formStats.filter(f => f.is_active === '1' || f.is_active === true).length,
       },
       forms: formStats.sort((a, b) => b.total_count - a.total_count),
       recentEntries: (recentData.entries || []).map((e: any) => ({
@@ -80,6 +91,7 @@ export async function GET(req: NextRequest) {
         ip: e.ip,
       })),
     })
+
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 })
   }
