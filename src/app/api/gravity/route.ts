@@ -7,66 +7,68 @@ export async function GET(req: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { searchParams } = new URL(req.url)
-  const siteUrl = searchParams.get('siteUrl')
-  const consumerKey = searchParams.get('consumerKey')
-  const consumerSecret = searchParams.get('consumerSecret')
-  const startDate = searchParams.get('startDate') // YYYY-MM-DD
-  const endDate   = searchParams.get('endDate')   // YYYY-MM-DD
+  const siteUrl       = searchParams.get('siteUrl')
+  const consumerKey   = searchParams.get('consumerKey')
+  const consumerSecret= searchParams.get('consumerSecret')
+  const startDate     = searchParams.get('startDate') // YYYY-MM-DD
+  const endDate       = searchParams.get('endDate')   // YYYY-MM-DD
 
   if (!siteUrl || !consumerKey || !consumerSecret) {
-    return NextResponse.json({ error: 'siteUrl, consumerKey and consumerSecret are required' }, { status: 400 })
+    return NextResponse.json(
+      { error: 'siteUrl, consumerKey and consumerSecret are required' },
+      { status: 400 }
+    )
   }
 
   try {
-    const baseUrl = siteUrl.replace(/\/$/, '')
+    const base  = siteUrl.replace(/\/$/, '')
     const creds = `consumer_key=${encodeURIComponent(consumerKey)}&consumer_secret=${encodeURIComponent(consumerSecret)}`
 
-    // Date params — applied to submission counts and entries but NOT to spam/trash totals
+    // Date range — only applied to period-scoped queries, NOT to totals/spam/trash
     const dateQ = [
       startDate ? `start_date=${encodeURIComponent(startDate)}` : '',
       endDate   ? `end_date=${encodeURIComponent(endDate)}`     : '',
     ].filter(Boolean).join('&')
+    const withDate = (extra = '') => [creds, extra, dateQ].filter(Boolean).join('&')
+    const noDate   = (extra = '') => [creds, extra].filter(Boolean).join('&')
 
-    const d = (extra = '') => `${creds}${extra ? `&${extra}` : ''}`
+    const count = (url: string) =>
+      fetch(url).then(r => r.json()).then(d => Number(d.total_count) || 0).catch(() => 0)
 
-    // Helper: GF REST API v2 uses search[status] for status filtering
-    const statusQ = (s: string) => `search%5Bstatus%5D=${s}` // search[status]=s URL-encoded
-
-    // ── Fetch forms ──────────────────────────────────────────────────────────
-    const formsRes = await fetch(`${baseUrl}/wp-json/gf/v2/forms?${creds}`, {
+    // ── Fetch forms list ─────────────────────────────────────────────────────
+    const formsRes = await fetch(`${base}/wp-json/gf/v2/forms?${creds}`, {
       headers: { 'Content-Type': 'application/json' },
     })
     if (!formsRes.ok) {
-      const err = await formsRes.json()
-      return NextResponse.json({ error: `Gravity Forms API error: ${JSON.stringify(err)}` }, { status: formsRes.status })
+      const err = await formsRes.json().catch(() => ({}))
+      return NextResponse.json(
+        { error: `Gravity Forms API error: ${JSON.stringify(err)}` },
+        { status: formsRes.status }
+      )
     }
-    const forms = await formsRes.json()
+    const forms     = await formsRes.json()
     const formsList = Array.isArray(forms) ? forms : Object.values(forms)
 
-    // ── All parallel fetches ─────────────────────────────────────────────────
+    // ── All fetches in parallel ───────────────────────────────────────────────
     const [
       formStats,
-      activeCount,
-      spamCount,    // always all-time — matches GF dashboard
-      trashCount,   // always all-time — matches GF dashboard
+      totalAll,    // GF "Total" tab — all statuses, all time — no date filter
+      activeCount, // active entries for selected period
+      spamCount,   // always all-time to match GF Spam folder
+      trashCount,  // always all-time to match GF Trash folder
       allEntries,
     ] = await Promise.all([
 
-      // Per-form active submission counts (scoped to selected period)
+      // Per-form active entry counts — scoped to selected period
       Promise.all(
         formsList.map(async (form: any) => {
           try {
-            const q = dateQ ? `&${dateQ}` : ''
-            const r = await fetch(
-              `${baseUrl}/wp-json/gf/v2/entries?form_ids[]=${form.id}&${statusQ('active')}&paging[page_size]=1&${creds}${q}`
-            )
+            const r    = await fetch(`${base}/wp-json/gf/v2/entries?form_ids[]=${form.id}&status=active&paging[page_size]=1&${withDate()}`)
             const data = await r.json()
             return {
-              id: form.id,
-              title: form.title,
-              total_count: data.total_count || 0,
-              is_active: form.is_active,
-              date_created: form.date_created,
+              id: form.id, title: form.title,
+              total_count: Number(data.total_count) || 0,
+              is_active: form.is_active, date_created: form.date_created,
             }
           } catch {
             return { id: form.id, title: form.title, total_count: 0, is_active: form.is_active, date_created: form.date_created }
@@ -74,37 +76,35 @@ export async function GET(req: NextRequest) {
         })
       ),
 
-      // Active entries count — scoped to period
-      fetch(`${baseUrl}/wp-json/gf/v2/entries?${statusQ('active')}&paging[page_size]=1&${d(dateQ)}`)
-        .then(r => r.json()).then(data => data.total_count || 0).catch(() => 0),
+      // Total ALL entries all-time (active + spam + trash) — matches GF "Total (N)"
+      count(`${base}/wp-json/gf/v2/entries?status=all&paging[page_size]=1&${noDate()}`),
 
-      // Spam total — NO date filter, always matches GF spam folder
-      fetch(`${baseUrl}/wp-json/gf/v2/entries?${statusQ('spam')}&paging[page_size]=1&${creds}`)
-        .then(r => r.json()).then(data => data.total_count || 0).catch(() => 0),
+      // Active entries — scoped to selected period
+      count(`${base}/wp-json/gf/v2/entries?status=active&paging[page_size]=1&${withDate()}`),
 
-      // Trash total — NO date filter, always matches GF trash folder
-      fetch(`${baseUrl}/wp-json/gf/v2/entries?${statusQ('trash')}&paging[page_size]=1&${creds}`)
-        .then(r => r.json()).then(data => data.total_count || 0).catch(() => 0),
+      // Spam — always all-time, matches GF Spam folder count
+      count(`${base}/wp-json/gf/v2/entries?status=spam&paging[page_size]=1&${noDate()}`),
 
-      // Last 50 entries across ALL statuses — scoped to period
-      fetch(`${baseUrl}/wp-json/gf/v2/entries?paging[page_size]=50&sorting[key]=date_created&sorting[direction]=DESC&${d(dateQ)}`)
+      // Trash — always all-time, matches GF Trash folder count
+      count(`${base}/wp-json/gf/v2/entries?status=trash&paging[page_size]=1&${noDate()}`),
+
+      // Last 50 entries (all statuses) — scoped to selected period
+      fetch(`${base}/wp-json/gf/v2/entries?status=all&paging[page_size]=50&sorting[key]=date_created&sorting[direction]=DESC&${withDate()}`)
         .then(r => r.json()).catch(() => ({ entries: [] })),
     ])
 
-    const totalSubmissions = formStats.reduce((a, f) => a + (f.total_count || 0), 0)
-
     return NextResponse.json({
       summary: {
-        totalForms: formsList.length,
-        totalSubmissions,
-        activeForms: formStats.filter(f => f.is_active === '1' || f.is_active === true || f.is_active === 1).length,
+        totalForms:       formsList.length,
+        totalSubmissions: totalAll,   // matches GF "Total (N)" exactly
+        activeForms:      formStats.filter(f => f.is_active === '1' || f.is_active === true || f.is_active === 1).length,
         statusCounts: {
           active: activeCount,
           spam:   spamCount,
           trash:  trashCount,
         },
       },
-      forms: formStats.sort((a, b) => b.total_count - a.total_count),
+      forms:   formStats.sort((a, b) => b.total_count - a.total_count),
       entries: (allEntries.entries || []).map((e: any) => ({
         id:           e.id,
         form_id:      e.form_id,
