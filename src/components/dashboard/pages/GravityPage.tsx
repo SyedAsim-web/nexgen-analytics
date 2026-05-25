@@ -96,8 +96,9 @@ export default function GravityPage({ projects }: Props) {
     : allEntries.filter(e => e.status === statusFilter)
 
   const statusCounts = data?.summary?.statusCounts ?? {}
+  const totalSubmissions = data?.summary?.totalSubmissions ?? 0
   const tabs: { key: StatusFilter; label: string; count: number; color: string }[] = [
-    { key: 'all',    label: 'All',    count: allEntries.length,         color: '#5b7fff' },
+    { key: 'all',    label: 'All',    count: totalSubmissions,           color: '#5b7fff' },
     { key: 'active', label: 'Active', count: statusCounts.active ?? 0,  color: '#22d3a0' },
     { key: 'spam',   label: 'Spam',   count: statusCounts.spam ?? 0,    color: '#f0b429' },
     { key: 'trash',  label: 'Trash',  count: statusCounts.trash ?? 0,   color: '#f56565' },
@@ -200,7 +201,7 @@ export default function GravityPage({ projects }: Props) {
                 <tbody>
                   {data.forms.map((form: any) => {
                     const share = data.summary.totalSubmissions > 0 ? Math.round((form.total_count / data.summary.totalSubmissions) * 100) : 0
-                    const active = form.is_active === '1' || form.is_active === true || form.is_active === 1
+                    const active = form.is_active === true || form.is_active === 1 || form.is_active === '1' || form.is_active === 'true'
                     return (
                       <tr key={form.id} style={{ borderBottom: '1px solid var(--border)' }}>
                         <td style={{ padding: '12px 16px' }}>
