@@ -107,8 +107,12 @@ export async function GET(req: NextRequest) {
       getEntries(`${base}/wp-json/gf/v2/entries?status=trash&paging[page_size]=20&sorting[key]=date_created&sorting[direction]=DESC&${noDate()}`),
     ])
 
-    // Merge and sort all entries by date
-    const merged = [...activeEntries, ...spamEntries, ...trashEntries]
+    // Tag each entry with its known status (GF API doesn't always include it in the entry object)
+    const taggedActive = activeEntries.map((e: any) => ({ ...e, status: 'active' }))
+    const taggedSpam   = spamEntries.map((e: any)   => ({ ...e, status: 'spam'   }))
+    const taggedTrash  = trashEntries.map((e: any)  => ({ ...e, status: 'trash'  }))
+
+    const merged = [...taggedActive, ...taggedSpam, ...taggedTrash]
       .sort((a, b) => new Date(b.date_created).getTime() - new Date(a.date_created).getTime())
 
     return NextResponse.json({
