@@ -52,16 +52,17 @@ export default function GA4Page({ projects }: Props) {
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [reauth, setReauth] = useState(false)
 
   useEffect(() => {
     if (!selected) return
     const p = projects.find(x => x.id === selected)
     if (!p?.integrations?.ga4?.property_id) return
-    setLoading(true); setError(''); setData(null)
+    setLoading(true); setError(''); setData(null); setReauth(false)
     fetch(`/api/ga4?propertyId=${encodeURIComponent(p.integrations.ga4.property_id)}&days=${days}`)
       .then(r => r.json())
       .then(json => {
-        if (json.error) setError(json.error)
+        if (json.error) { setError(json.error); setReauth(!!json.reauth) }
         else setData(json)
       })
       .catch(e => setError(e.message))
@@ -117,7 +118,7 @@ export default function GA4Page({ projects }: Props) {
       )}
 
       {loading && <Spinner />}
-      {error && <ErrorBox msg={error} />}
+      {error && <ErrorBox msg={error} reauth={reauth} />}
 
       {data && (
         <div>
@@ -232,10 +233,16 @@ function Spinner() {
   )
 }
 
-function ErrorBox({ msg }: { msg: string }) {
+function ErrorBox({ msg, reauth }: { msg: string; reauth?: boolean }) {
   return (
-    <div style={{ background: 'rgba(245,101,101,0.1)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 12, padding: '16px 20px', fontSize: 13, color: '#f56565' }}>
-      ⚠️ {msg}
+    <div style={{ background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 12, padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+      <span style={{ fontSize: 13, color: '#f56565' }}>⚠️ {msg}</span>
+      {reauth && (
+        <button onClick={() => window.location.href = '/api/auth/signin'}
+          style={{ padding: '7px 16px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+          Reconnect Google →
+        </button>
+      )}
     </div>
   )
 }

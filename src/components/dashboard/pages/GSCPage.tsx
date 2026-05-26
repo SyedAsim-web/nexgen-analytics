@@ -59,19 +59,20 @@ export default function GSCPage({ projects }: Props) {
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [reauth, setReauth] = useState(false)
   const [days, setDays] = useState(28)
   const [chart, setChart] = useState<'clicks' | 'impressions'>('clicks')
 
   const fetchData = async (projectId: string) => {
     const p = projects.find(x => x.id === projectId)
     if (!p?.integrations?.gsc?.property_url) return
-    setLoading(true); setError(''); setData(null)
+    setLoading(true); setError(''); setData(null); setReauth(false)
     try {
       const startDate = getDateDaysAgo(days)
       const endDate = getDateDaysAgo(0)
       const res = await fetch(`/api/gsc?siteUrl=${encodeURIComponent(p.integrations.gsc.property_url)}&startDate=${startDate}&endDate=${endDate}`)
       const json = await res.json()
-      if (!res.ok) { setError(json.error || 'Failed to load'); return }
+      if (!res.ok) { setError(json.error || 'Failed to load'); setReauth(!!json.reauth); return }
       setData(json)
     } catch (e: any) { setError(e.message) } finally { setLoading(false) }
   }
@@ -125,7 +126,7 @@ export default function GSCPage({ projects }: Props) {
       )}
 
       {loading && <Spinner />}
-      {error && <ErrorBox msg={error} />}
+      {error && <ErrorBox msg={error} reauth={reauth} />}
 
       {data && (
         <div>
@@ -269,6 +270,16 @@ function Spinner() {
   )
 }
 
-function ErrorBox({ msg }: { msg: string }) {
-  return <div style={{ background: 'rgba(245,101,101,0.1)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 12, padding: '16px 20px', fontSize: 13, color: '#f56565', marginBottom: 16 }}>⚠️ {msg}</div>
+function ErrorBox({ msg, reauth }: { msg: string; reauth?: boolean }) {
+  return (
+    <div style={{ background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 12, padding: '16px 20px', marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+      <span style={{ fontSize: 13, color: '#f56565' }}>⚠️ {msg}</span>
+      {reauth && (
+        <button onClick={() => window.location.href = '/api/auth/signin'}
+          style={{ padding: '7px 16px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+          Reconnect Google →
+        </button>
+      )}
+    </div>
+  )
 }

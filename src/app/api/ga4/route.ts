@@ -11,7 +11,8 @@ export async function GET(req: NextRequest) {
   const days = parseInt(searchParams.get('days') || '28')
 
   if (!propertyId) return NextResponse.json({ error: 'propertyId required' }, { status: 400 })
-  if (!session.accessToken) return NextResponse.json({ error: 'No Google access token' }, { status: 401 })
+  if ((session as any).error === 'RefreshAccessTokenError') return NextResponse.json({ error: 'Your Google session has expired. Please sign out and sign in again to reconnect.', reauth: true }, { status: 401 })
+  if (!session.accessToken) return NextResponse.json({ error: 'No Google access token. Please sign out and sign in again.', reauth: true }, { status: 401 })
 
   const startDate = `${days}daysAgo`
 
