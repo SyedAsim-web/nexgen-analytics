@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { Project } from '@/types'
 
-interface Props { projects: Project[]; loading: boolean; onViewSite: (p: Project) => void; onAddSite: () => void; onRefresh: () => void }
+interface Props { projects: Project[]; loading: boolean; onViewSite: (p: Project) => void; onAddSite: () => void; onRefresh: () => void; onDeleteSite: (id: string) => void }
 
 const INTEG_LABELS: Record<string, { label: string; color: string; bg: string }> = {
   gsc:     { label: 'GSC',     color: '#5b7fff', bg: 'rgba(91,127,255,0.12)' },
@@ -11,7 +11,7 @@ const INTEG_LABELS: Record<string, { label: string; color: string; bg: string }>
   gravity: { label: 'Gravity', color: '#9f7aea', bg: 'rgba(159,122,234,0.12)' },
 }
 
-export default function SitesPage({ projects, loading, onViewSite, onAddSite, onRefresh }: Props) {
+export default function SitesPage({ projects, loading, onViewSite, onAddSite, onRefresh, onDeleteSite }: Props) {
   const [q, setQ] = useState('')
   const filtered = projects.filter(p =>
     !q || p.domain.toLowerCase().includes(q.toLowerCase()) || (p.name || '').toLowerCase().includes(q.toLowerCase())
@@ -85,24 +85,38 @@ export default function SitesPage({ projects, loading, onViewSite, onAddSite, on
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 14 }}>
-          {filtered.map(p => <SiteCard key={p.id} project={p} onClick={() => onViewSite(p)} />)}
+          {filtered.map(p => <SiteCard key={p.id} project={p} onClick={() => onViewSite(p)} onDelete={onDeleteSite} />)}
         </div>
       )}
     </div>
   )
 }
 
-function SiteCard({ project: p, onClick }: { project: Project; onClick: () => void }) {
+function SiteCard({ project: p, onClick, onDelete }: { project: Project; onClick: () => void; onDelete: (id: string) => void }) {
+  const [confirm, setConfirm] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const integ = p.integrations || {}
   const connected = ['gsc', 'ga4', 'ghl', 'gravity'].filter(k => (integ as any)[k]?.connected)
   const initials = (p.name || p.domain).split(/\s+/).map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()
   const connCount = connected.length
 
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (!confirm) { setConfirm(true); return }
+    setDeleting(true)
+    try {
+      await fetch(`/api/sites/${p.id}`, { method: 'DELETE' })
+      onDelete(p.id)
+    } finally {
+      setDeleting(false)
+    }
+  }
+
   return (
     <div onClick={onClick} className="card-hover"
-      style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: 18, cursor: 'pointer' }}>
+      style={{ background: 'var(--bg2)', border: `1px solid ${confirm ? 'rgba(245,101,101,0.4)' : 'var(--border)'}`, borderRadius: 14, padding: 18, cursor: 'pointer', transition: 'border-color 0.2s' }}>
 
-      {/* Top: avatar + name + status */}
+      {/* Top: avatar + name + status + delete */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
         <div style={{
           width: 44, height: 44, borderRadius: 12,
@@ -115,11 +129,35 @@ function SiteCard({ project: p, onClick }: { project: Project; onClick: () => vo
           <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginBottom: 2 }}>{p.name || p.domain}</div>
           <div style={{ fontSize: 13, color: 'var(--text3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.domain}</div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, color: '#22d3a0', fontWeight: 700, flexShrink: 0, background: 'rgba(34,211,160,0.08)', padding: '3px 8px', borderRadius: 20 }}>
-          <span className="dot-online" />
-          Live
-        </div>
+        {/* Delete button */}
+        <button
+          onClick={handleDelete}
+          disabled={deleting}
+          title={confirm ? 'Click again to confirm delete' : 'Delete website'}
+          style={{
+            flexShrink: 0, width: 30, height: 30, borderRadius: 8, border: 'none', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s',
+            background: confirm ? 'rgba(245,101,101,0.15)' : 'rgba(245,101,101,0.08)',
+            color: '#f56565', fontSize: confirm ? 11 : 13, fontWeight: 700,
+          }}
+          onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,101,101,0.2)'}
+          onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = confirm ? 'rgba(245,101,101,0.15)' : 'rgba(245,101,101,0.08)'}
+        >
+          {deleting ? '…' : confirm ? 'Sure?' : (
+            <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          )}
+        </button>
       </div>
+
+      {confirm && (
+        <div onClick={e => e.stopPropagation()} style={{ marginBottom: 12, padding: '8px 12px', background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.25)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+          <span style={{ fontSize: 13, color: '#f56565' }}>Delete this website?</span>
+          <button onClick={e => { e.stopPropagation(); setConfirm(false) }}
+            style={{ fontSize: 13, color: 'var(--text3)', background: 'none', border: 'none', cursor: 'pointer', padding: '2px 6px' }}>
+            Cancel
+          </button>
+        </div>
+      )}
 
       {/* Integration badges */}
       <div style={{ display: 'flex', gap: 5, marginBottom: 14, flexWrap: 'wrap' }}>

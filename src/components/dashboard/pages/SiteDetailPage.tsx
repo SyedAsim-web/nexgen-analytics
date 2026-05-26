@@ -3,12 +3,24 @@ import { useState } from 'react'
 import { Session } from 'next-auth'
 import { Project } from '@/types'
 
-interface Props { project: Project; session: Session; onBack: () => void; onPresent: () => void; onRefresh: () => void }
+interface Props { project: Project; session: Session; onBack: () => void; onPresent: () => void; onRefresh: () => void; onDelete: () => void }
 type Tab = 'overview' | 'integrations' | 'team'
 
-export default function SiteDetailPage({ project, session, onBack, onPresent, onRefresh }: Props) {
+export default function SiteDetailPage({ project, session, onBack, onPresent, onRefresh, onDelete }: Props) {
   const [tab, setTab] = useState<Tab>('overview')
   const [saving, setSaving] = useState('')
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+
+  const handleDelete = async () => {
+    setDeleting(true)
+    try {
+      await fetch(`/api/sites/${project.id}`, { method: 'DELETE' })
+      onDelete()
+    } finally {
+      setDeleting(false)
+    }
+  }
   const [integForm, setIntegForm] = useState({
     gsc_property: project.integrations?.gsc?.property_url || '',
     ga4_property_id: project.integrations?.ga4?.property_id || '',
@@ -123,6 +135,34 @@ const saveIntegration = async (platform: string, config: any) => {
             <button onClick={() => setTab('integrations')} style={{ padding: '8px 16px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
               Set Up Integrations →
             </button>
+          </div>
+
+          {/* Danger Zone */}
+          <div style={{ background: 'rgba(245,101,101,0.04)', border: '1px solid rgba(245,101,101,0.2)', borderRadius: 12, padding: 20 }}>
+            <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: '#f56565', marginBottom: 6 }}>Danger Zone</div>
+            <p style={{ fontSize: 15, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
+              Permanently delete <strong style={{ color: 'var(--text)' }}>{project.name || project.domain}</strong> and all its integration settings. This cannot be undone.
+            </p>
+            {!confirmDelete ? (
+              <button onClick={() => setConfirmDelete(true)}
+                style={{ padding: '8px 18px', background: 'transparent', color: '#f56565', border: '1px solid rgba(245,101,101,0.4)', borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,101,101,0.1)' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent' }}>
+                Delete Website
+              </button>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                <span style={{ fontSize: 15, color: 'var(--text2)' }}>Are you sure? This is permanent.</span>
+                <button onClick={handleDelete} disabled={deleting}
+                  style={{ padding: '8px 18px', background: '#f56565', color: '#fff', border: 'none', borderRadius: 8, fontSize: 15, fontWeight: 700, cursor: 'pointer', opacity: deleting ? 0.7 : 1 }}>
+                  {deleting ? 'Deleting…' : 'Yes, Delete'}
+                </button>
+                <button onClick={() => setConfirmDelete(false)}
+                  style={{ padding: '8px 14px', background: 'none', color: 'var(--text3)', border: '1px solid var(--border)', borderRadius: 8, fontSize: 15, cursor: 'pointer' }}>
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

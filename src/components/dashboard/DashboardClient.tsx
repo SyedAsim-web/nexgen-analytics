@@ -115,6 +115,10 @@ export default function DashboardClient({ session }: Props) {
               onViewSite={viewSite}
               onAddSite={() => setShowAddSite(true)}
               onRefresh={fetchProjects}
+              onDeleteSite={async (id) => {
+                await fetch(`/api/sites/${id}`, { method: 'DELETE' })
+                fetchProjects()
+              }}
             />
           )}
           {page === 'site-detail' && selectedProject && (
@@ -124,6 +128,7 @@ export default function DashboardClient({ session }: Props) {
               onBack={() => navTo('sites')}
               onPresent={() => navTo('presentation', selectedProject)}
               onRefresh={fetchProjects}
+              onDelete={() => { setSelectedProject(null); navTo('sites'); fetchProjects() }}
             />
           )}
           {page === 'gsc' && <GSCPage projects={projects} session={session} />}
