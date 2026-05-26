@@ -36,7 +36,7 @@ function TrendBadge({ pct }: { pct: number | null }) {
   const up = pct >= 0
   return (
     <span style={{
-      fontSize: 10, fontWeight: 700, padding: '2px 6px', borderRadius: 6,
+      fontSize: 12, fontWeight: 700, padding: '2px 6px', borderRadius: 6,
       background: up ? 'rgba(34,211,160,0.1)' : 'rgba(245,101,101,0.1)',
       color: up ? '#22d3a0' : '#f56565',
     }}>
@@ -49,7 +49,7 @@ const TOOLTIP_STYLE = {
   background: 'var(--bg3, #1e2436)',
   border: '1px solid var(--border)',
   borderRadius: 8,
-  fontSize: 12,
+  fontSize: 14,
   color: 'var(--text)',
 }
 
@@ -92,17 +92,17 @@ export default function GSCPage({ projects }: Props) {
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h1 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>Google Search Console</h1>
-          <p style={{ fontSize: 13, color: 'var(--text3)' }}>Live data from your Search Console properties</p>
+          <p style={{ fontSize: 15, color: 'var(--text3)' }}>Live data from your Search Console properties</p>
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {gscProjects.length > 0 && (
             <select value={selected} onChange={e => setSelected(e.target.value)}
-              style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+              style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
               {gscProjects.map(p => <option key={p.id} value={p.id}>{p.name || p.domain}</option>)}
             </select>
           )}
           <select value={days} onChange={e => setDays(parseInt(e.target.value))}
-            style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+            style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
             <option value={7}>Last 7 days</option>
             <option value={28}>Last 28 days</option>
             <option value={90}>Last 90 days</option>
@@ -114,12 +114,12 @@ export default function GSCPage({ projects }: Props) {
         <div style={{ background: 'var(--bg2)', border: '1px solid rgba(91,127,255,0.3)', borderRadius: 16, padding: 48, textAlign: 'center' }}>
           <div style={{ fontSize: 44, marginBottom: 14 }}>🔍</div>
           <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>No GSC properties connected</div>
-          <p style={{ fontSize: 13, color: 'var(--text3)', lineHeight: 1.7, maxWidth: 400, margin: '0 auto 16px' }}>
+          <p style={{ fontSize: 15, color: 'var(--text3)', lineHeight: 1.7, maxWidth: 400, margin: '0 auto 16px' }}>
             Go to <strong style={{ color: 'var(--text)' }}>All Websites → your site → Integrations</strong> and connect Google Search Console.
           </p>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             {['Total Clicks', 'Impressions', 'CTR', 'Avg Position', 'Top Queries', 'Top Pages'].map(f => (
-              <span key={f} style={{ fontSize: 11, padding: '3px 10px', background: 'rgba(91,127,255,0.08)', color: '#5b7fff', borderRadius: 20, fontWeight: 600 }}>{f}</span>
+              <span key={f} style={{ fontSize: 13, padding: '3px 10px', background: 'rgba(91,127,255,0.08)', color: '#5b7fff', borderRadius: 20, fontWeight: 600 }}>{f}</span>
             ))}
           </div>
         </div>
@@ -140,7 +140,7 @@ export default function GSCPage({ projects }: Props) {
             ].map(s => (
               <div key={s.label} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 16, position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2.5, background: s.color }} />
-                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 7 }}>{s.label}</div>
+                <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 7 }}>{s.label}</div>
                 <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 26, fontWeight: 700, color: 'var(--text)', lineHeight: 1, marginBottom: 8 }}>{s.value}</div>
                 <TrendBadge pct={s.trend ?? null} />
               </div>
@@ -156,7 +156,7 @@ export default function GSCPage({ projects }: Props) {
               <div style={{ display: 'flex', gap: 6 }}>
                 {(['clicks', 'impressions'] as const).map(m => (
                   <button key={m} onClick={() => setChart(m)}
-                    style={{ padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.15s',
+                    style={{ padding: '4px 10px', borderRadius: 6, fontSize: 13, fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.15s',
                       background: chart === m ? (m === 'clicks' ? 'rgba(91,127,255,0.15)' : 'rgba(240,180,41,0.15)') : 'var(--bg3)',
                       color: chart === m ? (m === 'clicks' ? '#5b7fff' : '#f0b429') : 'var(--text3)',
                     }}>
@@ -181,8 +181,8 @@ export default function GSCPage({ projects }: Props) {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="dateLabel" tick={{ fontSize: 10, fill: 'var(--text3)' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
-                <YAxis tick={{ fontSize: 10, fill: 'var(--text3)' }} tickLine={false} axisLine={false} tickFormatter={fmtN} />
+                <XAxis dataKey="dateLabel" tick={{ fontSize: 12, fill: 'var(--text3)' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
+                <YAxis tick={{ fontSize: 12, fill: 'var(--text3)' }} tickLine={false} axisLine={false} tickFormatter={fmtN} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} />
                 {chart === 'clicks'
                   ? <Area type="monotone" dataKey="clicks" name="Clicks" stroke="#5b7fff" strokeWidth={2} fill="url(#gscClicks)" dot={false} />
@@ -196,13 +196,13 @@ export default function GSCPage({ projects }: Props) {
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden', marginBottom: 16 }}>
             <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>Top Search Queries</div>
-              <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: 'rgba(91,127,255,0.1)', color: '#5b7fff' }}>Live Data</span>
+              <span style={{ fontSize: 12, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: 'rgba(91,127,255,0.1)', color: '#5b7fff' }}>Live Data</span>
             </div>
             <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 15 }}>
                 <thead>
                   <tr>{['Query', 'Clicks', 'Impressions', 'CTR', 'Position'].map(h => (
-                    <th key={h} style={{ padding: '9px 16px', textAlign: 'left', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg3)', borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
+                    <th key={h} style={{ padding: '9px 16px', textAlign: 'left', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg3)', borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
                   ))}</tr>
                 </thead>
                 <tbody>
@@ -214,7 +214,7 @@ export default function GSCPage({ projects }: Props) {
                       <td style={{ padding: '10px 16px', color: 'var(--text2)', fontWeight: 600 }}>{q.clicks.toLocaleString()}</td>
                       <td style={{ padding: '10px 16px', color: 'var(--text2)' }}>{q.impressions.toLocaleString()}</td>
                       <td style={{ padding: '10px 16px' }}>
-                        <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: q.ctr > 3 ? 'rgba(34,211,160,0.1)' : 'rgba(240,180,41,0.1)', color: q.ctr > 3 ? '#22d3a0' : '#f0b429' }}>{q.ctr}%</span>
+                        <span style={{ fontSize: 12, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: q.ctr > 3 ? 'rgba(34,211,160,0.1)' : 'rgba(240,180,41,0.1)', color: q.ctr > 3 ? '#22d3a0' : '#f0b429' }}>{q.ctr}%</span>
                       </td>
                       <td style={{ padding: '10px 16px', color: 'var(--text2)' }}>{q.position}</td>
                     </tr>
@@ -228,13 +228,13 @@ export default function GSCPage({ projects }: Props) {
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
             <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>Top Pages</div>
-              <span style={{ fontSize: 11, color: 'var(--text3)' }}>by clicks</span>
+              <span style={{ fontSize: 13, color: 'var(--text3)' }}>by clicks</span>
             </div>
             <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 15 }}>
                 <thead>
                   <tr>{['Page URL', 'Clicks', 'Impressions', 'CTR', 'Position'].map(h => (
-                    <th key={h} style={{ padding: '9px 16px', textAlign: 'left', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg3)', borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
+                    <th key={h} style={{ padding: '9px 16px', textAlign: 'left', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg3)', borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
                   ))}</tr>
                 </thead>
                 <tbody>
@@ -246,7 +246,7 @@ export default function GSCPage({ projects }: Props) {
                       <td style={{ padding: '10px 16px', color: 'var(--text2)', fontWeight: 600 }}>{p.clicks.toLocaleString()}</td>
                       <td style={{ padding: '10px 16px', color: 'var(--text2)' }}>{p.impressions.toLocaleString()}</td>
                       <td style={{ padding: '10px 16px' }}>
-                        <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: p.ctr > 3 ? 'rgba(34,211,160,0.1)' : 'rgba(240,180,41,0.1)', color: p.ctr > 3 ? '#22d3a0' : '#f0b429' }}>{p.ctr}%</span>
+                        <span style={{ fontSize: 12, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: p.ctr > 3 ? 'rgba(34,211,160,0.1)' : 'rgba(240,180,41,0.1)', color: p.ctr > 3 ? '#22d3a0' : '#f0b429' }}>{p.ctr}%</span>
                       </td>
                       <td style={{ padding: '10px 16px', color: 'var(--text2)' }}>{p.position}</td>
                     </tr>
@@ -273,10 +273,10 @@ function Spinner() {
 function ErrorBox({ msg, reauth }: { msg: string; reauth?: boolean }) {
   return (
     <div style={{ background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 12, padding: '16px 20px', marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-      <span style={{ fontSize: 13, color: '#f56565' }}>⚠️ {msg}</span>
+      <span style={{ fontSize: 15, color: '#f56565' }}>⚠️ {msg}</span>
       {reauth && (
         <button onClick={() => window.location.href = '/api/auth/signin'}
-          style={{ padding: '7px 16px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+          style={{ padding: '7px 16px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
           Reconnect Google →
         </button>
       )}

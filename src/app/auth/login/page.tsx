@@ -77,14 +77,14 @@ export default function LoginPage() {
         </button>
 
         <div style={{ margin: '24px 0', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 24 }}>
-          <p style={{ fontSize: 12, color: '#50586e', lineHeight: 1.7 }}>
+          <p style={{ fontSize: 14, color: '#50586e', lineHeight: 1.7 }}>
             By signing in, NexGen will request read-only access to your Google Search Console and GA4 data. We never post or modify anything on your behalf.
           </p>
         </div>
 
         <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
           {['GSC', 'GA4', 'GHL', 'Forms'].map(p => (
-            <span key={p} style={{ fontSize: 11, padding: '3px 10px', background: 'rgba(91,127,255,0.1)', color: '#5b7fff', borderRadius: 20, fontWeight: 600 }}>{p}</span>
+            <span key={p} style={{ fontSize: 13, padding: '3px 10px', background: 'rgba(91,127,255,0.1)', color: '#5b7fff', borderRadius: 20, fontWeight: 600 }}>{p}</span>
           ))}
         </div>
       </div>

@@ -75,7 +75,7 @@ export default function Sidebar({ page, navTo, sidebarOpen, projectCount, onAddS
           <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 17, fontWeight: 800, color: dark ? '#fff' : '#0d0f14', letterSpacing: '-0.01em', lineHeight: 1.1 }}>
             Nex<span style={{ color: '#5b7fff' }}>Gen</span>
           </div>
-          <div style={{ fontSize: 9, color: text3, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600 }}>Analytics Platform</div>
+          <div style={{ fontSize: 11, color: text3, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600 }}>Analytics Platform</div>
         </div>
       </div>
 
@@ -83,7 +83,7 @@ export default function Sidebar({ page, navTo, sidebarOpen, projectCount, onAddS
       <nav style={{ flex: 1, padding: '10px 8px', overflowY: 'auto' }}>
         {NAV.map(group => (
           <div key={group.group} style={{ marginBottom: 20 }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: text3, padding: '0 8px', marginBottom: 4 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: text3, padding: '0 8px', marginBottom: 4 }}>
               {group.group}
             </div>
             {group.items.map(item => {
@@ -98,7 +98,7 @@ export default function Sidebar({ page, navTo, sidebarOpen, projectCount, onAddS
                     color: active ? '#5b7fff' : text2,
                     background: active ? 'rgba(91,127,255,0.1)' : 'transparent',
                     fontWeight: active ? 600 : 400,
-                    fontSize: 13, border: 'none', cursor: 'pointer',
+                    fontSize: 15, border: 'none', cursor: 'pointer',
                     transition: 'all 0.15s',
                     position: 'relative',
                     fontFamily: 'Inter, sans-serif',
@@ -117,7 +117,7 @@ export default function Sidebar({ page, navTo, sidebarOpen, projectCount, onAddS
                   <span style={{ flex: 1 }}>{item.label}</span>
                   {item.id === 'sites' && (
                     <span style={{
-                      fontSize: 10, fontWeight: 700, padding: '1px 7px', borderRadius: 20,
+                      fontSize: 12, fontWeight: 700, padding: '1px 7px', borderRadius: 20,
                       background: active ? 'rgba(91,127,255,0.2)' : (dark ? '#222737' : '#e8eaf2'),
                       color: active ? '#5b7fff' : text3,
                       transition: 'all 0.15s',
@@ -135,7 +135,7 @@ export default function Sidebar({ page, navTo, sidebarOpen, projectCount, onAddS
         {/* Add site button */}
         <button
           onClick={onAddSite}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, width: '100%', padding: '8px', borderRadius: 8, background: dark ? 'rgba(91,127,255,0.12)' : 'rgba(91,127,255,0.08)', color: '#5b7fff', fontSize: 12, fontWeight: 600, border: `1px solid rgba(91,127,255,0.25)`, cursor: 'pointer', transition: 'all 0.15s', marginBottom: 4 }}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, width: '100%', padding: '8px', borderRadius: 8, background: dark ? 'rgba(91,127,255,0.12)' : 'rgba(91,127,255,0.08)', color: '#5b7fff', fontSize: 14, fontWeight: 600, border: `1px solid rgba(91,127,255,0.25)`, cursor: 'pointer', transition: 'all 0.15s', marginBottom: 4 }}
           onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(91,127,255,0.18)' }}
           onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = dark ? 'rgba(91,127,255,0.12)' : 'rgba(91,127,255,0.08)' }}
         >

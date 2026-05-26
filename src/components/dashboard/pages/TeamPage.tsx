@@ -41,7 +41,7 @@ const PERMISSIONS = [
 function RoleBadge({ role }: { role: Role }) {
   const c = ROLE_CONFIG[role]
   return (
-    <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 20, background: c.bg, color: c.color }}>
+    <span style={{ fontSize: 12, fontWeight: 700, padding: '3px 9px', borderRadius: 20, background: c.bg, color: c.color }}>
       {c.label}
     </span>
   )
@@ -61,7 +61,7 @@ function Avatar({ name, image, size = 36 }: { name: string; image?: string; size
 function Check({ yes }: { yes: boolean }) {
   return yes
     ? <span style={{ color: '#22d3a0', fontSize: 15 }}>✓</span>
-    : <span style={{ color: 'var(--text3)', fontSize: 13 }}>—</span>
+    : <span style={{ color: 'var(--text3)', fontSize: 15 }}>—</span>
 }
 
 export default function TeamPage({ projects, project, session, onViewSite }: Props) {
@@ -138,11 +138,11 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h1 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>Team</h1>
-          <p style={{ fontSize: 13, color: 'var(--text3)' }}>Manage members and permissions for your website</p>
+          <p style={{ fontSize: 15, color: 'var(--text3)' }}>Manage members and permissions for your website</p>
         </div>
         {projects.length > 1 && (
           <select value={selectedId} onChange={e => setSelectedId(e.target.value)}
-            style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+            style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
             {projects.map(p => <option key={p.id} value={p.id}>{p.name || p.domain}</option>)}
           </select>
         )}
@@ -152,7 +152,7 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
         <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 40, textAlign: 'center' }}>
           <div style={{ fontSize: 40, marginBottom: 12 }}>👥</div>
           <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>No websites yet</div>
-          <p style={{ fontSize: 13, color: 'var(--text3)' }}>Add a website first to start managing team access.</p>
+          <p style={{ fontSize: 15, color: 'var(--text3)' }}>Add a website first to start managing team access.</p>
         </div>
       )}
 
@@ -179,12 +179,12 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
                     onChange={e => setInviteEmail(e.target.value)}
                     placeholder="colleague@company.com"
                     required
-                    style={{ flex: 1, minWidth: 180, padding: '9px 12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', fontFamily: 'Inter, sans-serif' }}
+                    style={{ flex: 1, minWidth: 180, padding: '9px 12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', fontFamily: 'Inter, sans-serif' }}
                   />
                   <select
                     value={inviteRole}
                     onChange={e => setInviteRole(e.target.value as Role)}
-                    style={{ padding: '9px 10px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}
+                    style={{ padding: '9px 10px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}
                   >
                     <option value="viewer">Viewer</option>
                     <option value="editor">Editor</option>
@@ -193,7 +193,7 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
                   <button
                     type="submit"
                     disabled={inviting || !inviteEmail.trim()}
-                    style={{ padding: '9px 18px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer', opacity: inviting ? 0.7 : 1, whiteSpace: 'nowrap', transition: 'opacity 0.15s' }}
+                    style={{ padding: '9px 18px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: 'pointer', opacity: inviting ? 0.7 : 1, whiteSpace: 'nowrap', transition: 'opacity 0.15s' }}
                   >
                     {inviting ? 'Sending…' : 'Send Invite'}
                   </button>
@@ -201,12 +201,12 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
               </form>
 
               {inviteMsg && (
-                <div style={{ marginTop: 10, padding: '9px 12px', borderRadius: 8, fontSize: 12, background: inviteMsg.type === 'ok' ? 'rgba(34,211,160,0.08)' : 'rgba(245,101,101,0.08)', border: `1px solid ${inviteMsg.type === 'ok' ? 'rgba(34,211,160,0.25)' : 'rgba(245,101,101,0.25)'}`, color: inviteMsg.type === 'ok' ? '#22d3a0' : '#f56565' }}>
+                <div style={{ marginTop: 10, padding: '9px 12px', borderRadius: 8, fontSize: 14, background: inviteMsg.type === 'ok' ? 'rgba(34,211,160,0.08)' : 'rgba(245,101,101,0.08)', border: `1px solid ${inviteMsg.type === 'ok' ? 'rgba(34,211,160,0.25)' : 'rgba(245,101,101,0.25)'}`, color: inviteMsg.type === 'ok' ? '#22d3a0' : '#f56565' }}>
                   {inviteMsg.type === 'ok' ? '✓' : '⚠️'} {inviteMsg.text}
                 </div>
               )}
 
-              <div style={{ marginTop: 12, padding: '10px 12px', background: 'rgba(91,127,255,0.05)', borderRadius: 8, fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>
+              <div style={{ marginTop: 12, padding: '10px 12px', background: 'rgba(91,127,255,0.05)', borderRadius: 8, fontSize: 14, color: 'var(--text3)', lineHeight: 1.6 }}>
                 💡 Invited members will receive an email link to access this project with the selected permissions.
               </div>
             </div>
@@ -215,7 +215,7 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
             <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
               <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>Team Members</div>
-                <span style={{ fontSize: 11, color: 'var(--text3)', fontWeight: 600 }}>{accepted.length + 1} member{accepted.length !== 0 ? 's' : ''}</span>
+                <span style={{ fontSize: 13, color: 'var(--text3)', fontWeight: 600 }}>{accepted.length + 1} member{accepted.length !== 0 ? 's' : ''}</span>
               </div>
 
               {loading ? (
@@ -228,24 +228,24 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 18px', borderBottom: '1px solid var(--border)' }}>
                     <Avatar name={session.user?.name || '?'} image={session.user?.image || undefined} />
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>
-                        {session.user?.name} <span style={{ fontSize: 11, color: 'var(--text3)', fontWeight: 400 }}>(you)</span>
+                      <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>
+                        {session.user?.name} <span style={{ fontSize: 13, color: 'var(--text3)', fontWeight: 400 }}>(you)</span>
                       </div>
-                      <div style={{ fontSize: 11, color: 'var(--text3)' }}>{session.user?.email}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text3)' }}>{session.user?.email}</div>
                     </div>
-                    <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 20, background: 'rgba(240,180,41,0.12)', color: '#f0b429' }}>Owner</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, padding: '3px 9px', borderRadius: 20, background: 'rgba(240,180,41,0.12)', color: '#f0b429' }}>Owner</span>
                   </div>
 
                   {accepted.map(m => (
                     <div key={m.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 18px', borderBottom: '1px solid var(--border)' }}>
                       <Avatar name={m.name || m.email} image={m.avatar_url} />
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{m.name || m.email}</div>
-                        <div style={{ fontSize: 11, color: 'var(--text3)' }}>{m.email}</div>
+                        <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>{m.name || m.email}</div>
+                        <div style={{ fontSize: 13, color: 'var(--text3)' }}>{m.email}</div>
                       </div>
                       <RoleBadge role={m.role} />
                       <button onClick={() => handleRemove(m.id)} disabled={removing === m.id}
-                        style={{ width: 28, height: 28, borderRadius: 7, background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.2)', color: '#f56565', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0, transition: 'background 0.12s' }}
+                        style={{ width: 28, height: 28, borderRadius: 7, background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.2)', color: '#f56565', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, flexShrink: 0, transition: 'background 0.12s' }}
                         onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,101,101,0.16)'}
                         onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,101,101,0.08)'}
                         title="Remove member">
@@ -255,7 +255,7 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
                   ))}
 
                   {accepted.length === 0 && (
-                    <div style={{ padding: '24px', textAlign: 'center', fontSize: 13, color: 'var(--text3)' }}>
+                    <div style={{ padding: '24px', textAlign: 'center', fontSize: 15, color: 'var(--text3)' }}>
                       No other members yet — invite your team above.
                     </div>
                   )}
@@ -268,7 +268,7 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
               <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
                 <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>Pending Invites</div>
-                  <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 10, background: 'rgba(240,180,41,0.12)', color: '#f0b429' }}>{pending.length}</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, padding: '2px 7px', borderRadius: 10, background: 'rgba(240,180,41,0.12)', color: '#f0b429' }}>{pending.length}</span>
                 </div>
                 {pending.map(m => (
                   <div key={m.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 18px', borderBottom: '1px solid var(--border)' }}>
@@ -276,12 +276,12 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
                       <svg width="14" height="14" fill="none" stroke="#f0b429" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 13, color: 'var(--text2)', fontStyle: 'italic' }}>{m.email}</div>
-                      <div style={{ fontSize: 11, color: 'var(--text3)' }}>Invited · awaiting acceptance</div>
+                      <div style={{ fontSize: 15, color: 'var(--text2)', fontStyle: 'italic' }}>{m.email}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text3)' }}>Invited · awaiting acceptance</div>
                     </div>
                     <RoleBadge role={m.role} />
                     <button onClick={() => handleRemove(m.id)} disabled={removing === m.id}
-                      style={{ width: 28, height: 28, borderRadius: 7, background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.2)', color: '#f56565', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0 }}
+                      style={{ width: 28, height: 28, borderRadius: 7, background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.2)', color: '#f56565', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, flexShrink: 0 }}
                       title="Cancel invite">
                       {removing === m.id ? '…' : '×'}
                     </button>
@@ -298,15 +298,15 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
             <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
               <div style={{ padding: '14px 16px', borderBottom: '1px solid var(--border)' }}>
                 <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 2 }}>Permissions</div>
-                <div style={{ fontSize: 11, color: 'var(--text3)' }}>What each role can do</div>
+                <div style={{ fontSize: 13, color: 'var(--text3)' }}>What each role can do</div>
               </div>
               <div style={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
                   <thead>
                     <tr>
-                      <th style={{ padding: '8px 14px', textAlign: 'left', fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg3)', borderBottom: '1px solid var(--border)' }}>Action</th>
+                      <th style={{ padding: '8px 14px', textAlign: 'left', fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg3)', borderBottom: '1px solid var(--border)' }}>Action</th>
                       {(['admin', 'editor', 'viewer'] as Role[]).map(r => (
-                        <th key={r} style={{ padding: '8px 10px', textAlign: 'center', fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: ROLE_CONFIG[r].color, background: 'var(--bg3)', borderBottom: '1px solid var(--border)' }}>
+                        <th key={r} style={{ padding: '8px 10px', textAlign: 'center', fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: ROLE_CONFIG[r].color, background: 'var(--bg3)', borderBottom: '1px solid var(--border)' }}>
                           {ROLE_CONFIG[r].label}
                         </th>
                       ))}
@@ -328,13 +328,13 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
 
             {/* Role descriptions */}
             <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: 14 }}>
-              <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Role Descriptions</div>
+              <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Role Descriptions</div>
               {(['admin', 'editor', 'viewer'] as Role[]).map(r => {
                 const c = ROLE_CONFIG[r]
                 return (
                   <div key={r} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
                     <RoleBadge role={r} />
-                    <span style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{c.perms}</span>
+                    <span style={{ fontSize: 14, color: 'var(--text3)', lineHeight: 1.5 }}>{c.perms}</span>
                   </div>
                 )
               })}

@@ -22,7 +22,7 @@ const TOOLTIP_STYLE = {
   background: 'var(--bg3, #1e2436)',
   border: '1px solid var(--border)',
   borderRadius: 8,
-  fontSize: 12,
+  fontSize: 14,
   color: 'var(--text)',
 }
 
@@ -39,7 +39,7 @@ function TrendBadge({ pct }: { pct: number | null }) {
   if (pct === null) return null
   const up = pct >= 0
   return (
-    <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 6px', borderRadius: 6, background: up ? 'rgba(34,211,160,0.1)' : 'rgba(245,101,101,0.1)', color: up ? '#22d3a0' : '#f56565' }}>
+    <span style={{ fontSize: 12, fontWeight: 700, padding: '2px 6px', borderRadius: 6, background: up ? 'rgba(34,211,160,0.1)' : 'rgba(245,101,101,0.1)', color: up ? '#22d3a0' : '#f56565' }}>
       {up ? '▲' : '▼'} {Math.abs(pct)}%
     </span>
   )
@@ -83,17 +83,17 @@ export default function GA4Page({ projects }: Props) {
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h1 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>Google Analytics 4</h1>
-          <p style={{ fontSize: 13, color: 'var(--text3)' }}>Real-time audience and behaviour data from GA4</p>
+          <p style={{ fontSize: 15, color: 'var(--text3)' }}>Real-time audience and behaviour data from GA4</p>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           {ga4Projects.length > 0 && (
             <select value={selected} onChange={e => setSelected(e.target.value)}
-              style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+              style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
               {ga4Projects.map(p => <option key={p.id} value={p.id}>{p.name || p.domain}</option>)}
             </select>
           )}
           <select value={days} onChange={e => setDays(parseInt(e.target.value))}
-            style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+            style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
             <option value={7}>Last 7 days</option>
             <option value={28}>Last 28 days</option>
             <option value={90}>Last 90 days</option>
@@ -106,12 +106,12 @@ export default function GA4Page({ projects }: Props) {
         <div style={{ background: 'var(--bg2)', border: '1px solid rgba(249,115,22,0.3)', borderRadius: 12, padding: 40, textAlign: 'center' }}>
           <div style={{ fontSize: 44, marginBottom: 14 }}>📈</div>
           <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>No GA4 properties connected</div>
-          <p style={{ fontSize: 13, color: 'var(--text3)', lineHeight: 1.7, maxWidth: 400, margin: '0 auto 16px' }}>
+          <p style={{ fontSize: 15, color: 'var(--text3)', lineHeight: 1.7, maxWidth: 400, margin: '0 auto 16px' }}>
             Go to <strong style={{ color: 'var(--text)' }}>All Websites → your site → Integrations</strong> and add your GA4 Property ID to see real analytics data.
           </p>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             {['Sessions', 'Users', 'Bounce Rate', 'Conversions', 'Device Breakdown', 'Top Countries'].map(f => (
-              <span key={f} style={{ fontSize: 11, padding: '3px 10px', background: 'rgba(249,115,22,0.08)', color: '#f97316', borderRadius: 20, fontWeight: 600 }}>{f}</span>
+              <span key={f} style={{ fontSize: 13, padding: '3px 10px', background: 'rgba(249,115,22,0.08)', color: '#f97316', borderRadius: 20, fontWeight: 600 }}>{f}</span>
             ))}
           </div>
         </div>
@@ -134,7 +134,7 @@ export default function GA4Page({ projects }: Props) {
             ].map(s => (
               <div key={s.label} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 16, position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2.5, background: s.color }} />
-                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 7 }}>{s.label}</div>
+                <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 7 }}>{s.label}</div>
                 <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 24, fontWeight: 700, color: 'var(--text)', lineHeight: 1, marginBottom: 8 }}>{s.value}</div>
                 <TrendBadge pct={s.trend ?? null} />
               </div>
@@ -147,7 +147,7 @@ export default function GA4Page({ projects }: Props) {
               <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>
                 Sessions & Users — last {days} days
               </span>
-              <div style={{ display: 'flex', gap: 14, fontSize: 11, color: 'var(--text3)' }}>
+              <div style={{ display: 'flex', gap: 14, fontSize: 13, color: 'var(--text3)' }}>
                 <LegendDot color="#5b7fff" label="Sessions" />
                 <LegendDot color="#22d3a0" label="Users" />
               </div>
@@ -168,8 +168,8 @@ export default function GA4Page({ projects }: Props) {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="dateLabel" tick={{ fontSize: 10, fill: 'var(--text3)' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
-                <YAxis tick={{ fontSize: 10, fill: 'var(--text3)' }} tickLine={false} axisLine={false} tickFormatter={fmtN} />
+                <XAxis dataKey="dateLabel" tick={{ fontSize: 12, fill: 'var(--text3)' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
+                <YAxis tick={{ fontSize: 12, fill: 'var(--text3)' }} tickLine={false} axisLine={false} tickFormatter={fmtN} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} />
                 <Area type="monotone" dataKey="sessions" name="Sessions" stroke="#5b7fff" strokeWidth={2} fill="url(#ga4ps)" dot={false} />
                 <Area type="monotone" dataKey="users" name="Users" stroke="#22d3a0" strokeWidth={2} fill="url(#ga4pu)" dot={false} />
@@ -189,8 +189,8 @@ export default function GA4Page({ projects }: Props) {
                   return (
                     <div key={d.device} style={{ marginBottom: 14 }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                        <span style={{ fontSize: 13, color: 'var(--text2)', textTransform: 'capitalize' }}>{d.device}</span>
-                        <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>{pct}% <span style={{ fontWeight: 400, color: 'var(--text3)', fontSize: 11 }}>({d.sessions.toLocaleString()})</span></span>
+                        <span style={{ fontSize: 15, color: 'var(--text2)', textTransform: 'capitalize' }}>{d.device}</span>
+                        <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>{pct}% <span style={{ fontWeight: 400, color: 'var(--text3)', fontSize: 13 }}>({d.sessions.toLocaleString()})</span></span>
                       </div>
                       <div style={{ height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.07)' }}>
                         <div style={{ height: '100%', borderRadius: 3, background: colors[i % colors.length], width: `${pct}%`, transition: 'width 0.6s ease' }} />
@@ -204,8 +204,8 @@ export default function GA4Page({ projects }: Props) {
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 14 }}>Top Countries</div>
               {data.countries.map((c: any) => (
                 <div key={c.country} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border)' }}>
-                  <span style={{ fontSize: 13, color: 'var(--text2)' }}>{c.country}</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{c.sessions.toLocaleString()}</span>
+                  <span style={{ fontSize: 15, color: 'var(--text2)' }}>{c.country}</span>
+                  <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>{c.sessions.toLocaleString()}</span>
                 </div>
               ))}
             </div>
@@ -236,10 +236,10 @@ function Spinner() {
 function ErrorBox({ msg, reauth }: { msg: string; reauth?: boolean }) {
   return (
     <div style={{ background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 12, padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-      <span style={{ fontSize: 13, color: '#f56565' }}>⚠️ {msg}</span>
+      <span style={{ fontSize: 15, color: '#f56565' }}>⚠️ {msg}</span>
       {reauth && (
         <button onClick={() => window.location.href = '/api/auth/signin'}
-          style={{ padding: '7px 16px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+          style={{ padding: '7px 16px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
           Reconnect Google →
         </button>
       )}

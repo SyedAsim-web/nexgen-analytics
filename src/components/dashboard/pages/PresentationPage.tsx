@@ -109,13 +109,13 @@ export default function PresentationPage({ project, projects, session, onSelectP
           <h1 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
             Presentation Builder
           </h1>
-          <p style={{ fontSize: 13, color: 'var(--text3)' }}>
+          <p style={{ fontSize: 15, color: 'var(--text3)' }}>
             Generate a client-ready report from your live analytics data
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <button onClick={handlePrint}
-            style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', background: '#5b7fff', border: 'none', borderRadius: 8, color: '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', background: '#5b7fff', border: 'none', borderRadius: 8, color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
             <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
@@ -131,18 +131,18 @@ export default function PresentationPage({ project, projects, session, onSelectP
 
           {/* Site selector */}
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 14 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 8 }}>Website</div>
+            <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 8 }}>Website</div>
             <select value={selectedId} onChange={e => setSelectedId(e.target.value)}
-              style={{ width: '100%', padding: '8px 10px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+              style={{ width: '100%', padding: '8px 10px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
               {projects.map(p => <option key={p.id} value={p.id}>{p.name || p.domain}</option>)}
             </select>
           </div>
 
           {/* Date range */}
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 14 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 8 }}>Date Range</div>
+            <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 8 }}>Date Range</div>
             <select value={days} onChange={e => setDays(parseInt(e.target.value))}
-              style={{ width: '100%', padding: '8px 10px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+              style={{ width: '100%', padding: '8px 10px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
               <option value={7}>Last 7 days</option>
               <option value={28}>Last 28 days</option>
               <option value={90}>Last 90 days</option>
@@ -151,7 +151,7 @@ export default function PresentationPage({ project, projects, session, onSelectP
 
           {/* Sections */}
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 14 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 10 }}>Include Sections</div>
+            <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 10 }}>Include Sections</div>
             {[
               { key: 'ga4', label: 'GA4 Analytics', icon: '📈', avail: !!selectedProject?.integrations?.ga4?.connected },
               { key: 'gsc', label: 'Search Console', icon: '🔍', avail: !!selectedProject?.integrations?.gsc?.connected },
@@ -160,9 +160,9 @@ export default function PresentationPage({ project, projects, session, onSelectP
             ].map(s => (
               <div key={s.key} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '7px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                  <span style={{ fontSize: 13 }}>{s.icon}</span>
-                  <span style={{ fontSize: 12, color: s.avail ? 'var(--text2)' : 'var(--text3)' }}>{s.label}</span>
-                  {!s.avail && <span style={{ fontSize: 9, color: 'var(--text3)', fontWeight: 600 }}>N/A</span>}
+                  <span style={{ fontSize: 15 }}>{s.icon}</span>
+                  <span style={{ fontSize: 14, color: s.avail ? 'var(--text2)' : 'var(--text3)' }}>{s.label}</span>
+                  {!s.avail && <span style={{ fontSize: 11, color: 'var(--text3)', fontWeight: 600 }}>N/A</span>}
                 </div>
                 <div
                   onClick={() => s.avail && setSections(prev => ({ ...prev, [s.key]: !prev[s.key as keyof typeof prev] }))}
@@ -182,22 +182,22 @@ export default function PresentationPage({ project, projects, session, onSelectP
 
           {/* Slide list */}
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 14 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 10 }}>Slides</div>
+            <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 10 }}>Slides</div>
             {slides.map((s, i) => (
               <div key={s.id} onClick={() => setActiveSlide(i)}
                 style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 8, cursor: 'pointer', marginBottom: 4,
                   background: activeSlide === i ? 'rgba(91,127,255,0.12)' : 'transparent',
                   border: activeSlide === i ? '1px solid rgba(91,127,255,0.3)' : '1px solid transparent',
                 }}>
-                <span style={{ fontSize: 10, fontWeight: 700, width: 18, height: 18, borderRadius: 4, background: activeSlide === i ? '#5b7fff' : 'var(--bg3)', color: activeSlide === i ? '#fff' : 'var(--text3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{i + 1}</span>
-                <span style={{ fontSize: 12, color: activeSlide === i ? '#5b7fff' : 'var(--text2)', fontWeight: activeSlide === i ? 600 : 400 }}>{s.label}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, width: 18, height: 18, borderRadius: 4, background: activeSlide === i ? '#5b7fff' : 'var(--bg3)', color: activeSlide === i ? '#fff' : 'var(--text3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{i + 1}</span>
+                <span style={{ fontSize: 14, color: activeSlide === i ? '#5b7fff' : 'var(--text2)', fontWeight: activeSlide === i ? 600 : 400 }}>{s.label}</span>
               </div>
             ))}
           </div>
 
           {/* Refresh */}
           <button onClick={() => selectedProject && fetchAll(selectedProject)} disabled={loading}
-            style={{ padding: '9px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text2)', fontSize: 12, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+            style={{ padding: '9px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text2)', fontSize: 14, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
             {loading ? (
               <><div style={{ width: 12, height: 12, border: '2px solid rgba(91,127,255,0.2)', borderTopColor: '#5b7fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} /> Loading data…</>
             ) : (
@@ -214,12 +214,12 @@ export default function PresentationPage({ project, projects, session, onSelectP
             <div style={{ padding: '10px 16px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <button onClick={() => setActiveSlide(Math.max(0, activeSlide - 1))} disabled={activeSlide === 0}
-                  style={{ padding: '4px 10px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 6, color: 'var(--text2)', fontSize: 12, cursor: 'pointer', opacity: activeSlide === 0 ? 0.4 : 1 }}>← Prev</button>
-                <span style={{ fontSize: 12, color: 'var(--text3)' }}>{activeSlide + 1} / {slides.length}</span>
+                  style={{ padding: '4px 10px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 6, color: 'var(--text2)', fontSize: 14, cursor: 'pointer', opacity: activeSlide === 0 ? 0.4 : 1 }}>← Prev</button>
+                <span style={{ fontSize: 14, color: 'var(--text3)' }}>{activeSlide + 1} / {slides.length}</span>
                 <button onClick={() => setActiveSlide(Math.min(slides.length - 1, activeSlide + 1))} disabled={activeSlide === slides.length - 1}
-                  style={{ padding: '4px 10px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 6, color: 'var(--text2)', fontSize: 12, cursor: 'pointer', opacity: activeSlide === slides.length - 1 ? 0.4 : 1 }}>Next →</button>
+                  style={{ padding: '4px 10px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 6, color: 'var(--text2)', fontSize: 14, cursor: 'pointer', opacity: activeSlide === slides.length - 1 ? 0.4 : 1 }}>Next →</button>
               </div>
-              <span style={{ fontSize: 11, color: 'var(--text3)' }}>{slides[activeSlide]?.label}</span>
+              <span style={{ fontSize: 13, color: 'var(--text3)' }}>{slides[activeSlide]?.label}</span>
             </div>
 
             {/* Slide canvas */}
@@ -255,8 +255,8 @@ export default function PresentationPage({ project, projects, session, onSelectP
                   border: `2px solid ${activeSlide === i ? '#5b7fff' : 'var(--border)'}`,
                   opacity: activeSlide === i ? 1 : 0.65, transition: 'all 0.15s' }}>
                 <div style={{ aspectRatio: '16/9', background: 'linear-gradient(135deg,#0f111a,#1a1d2e)', padding: 8, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-                  <div style={{ fontSize: 8, fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 2 }}>{i + 1}</div>
-                  <div style={{ fontSize: 9, fontWeight: 600, color: '#fff', lineHeight: 1.3 }}>{s.label}</div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 2 }}>{i + 1}</div>
+                  <div style={{ fontSize: 11, fontWeight: 600, color: '#fff', lineHeight: 1.3 }}>{s.label}</div>
                 </div>
               </div>
             ))}
@@ -333,8 +333,8 @@ function StatBox({ label, value, color, sub }: { label: string; value: string; c
   return (
     <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: 8, padding: '10px 12px', borderLeft: `3px solid ${color}` }}>
       <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 22, fontWeight: 800, color, lineHeight: 1, marginBottom: 3 }}>{value}</div>
-      <div style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.5)' }}>{label}</div>
-      {sub && <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', marginTop: 2 }}>{sub}</div>}
+      <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.5)' }}>{label}</div>
+      {sub && <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 2 }}>{sub}</div>}
     </div>
   )
 }
@@ -345,7 +345,7 @@ function SlideHeader({ icon, title, subtitle, color }: { icon: string; title: st
       <div style={{ width: 36, height: 36, borderRadius: 10, background: `${color}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>{icon}</div>
       <div>
         <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 16, fontWeight: 800, color: '#fff' }}>{title}</div>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{subtitle}</div>
+        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>{subtitle}</div>
       </div>
     </div>
   )
@@ -363,7 +363,7 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
       <div style={{ position: 'absolute', top: -60, right: -60, width: 280, height: 280, borderRadius: '50%', background: 'radial-gradient(circle, rgba(91,127,255,0.2) 0%, transparent 70%)' }} />
       <div style={{ position: 'absolute', bottom: -40, left: -40, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(34,211,160,0.15) 0%, transparent 70%)' }} />
       <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 48px' }}>
-        <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#5b7fff', marginBottom: 16 }}>Analytics Report</div>
+        <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#5b7fff', marginBottom: 16 }}>Analytics Report</div>
         <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 36, fontWeight: 800, color: '#fff', lineHeight: 1.15, marginBottom: 12, maxWidth: 480 }}>{name}</div>
         <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', marginBottom: 28 }}>{domain}</div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -373,13 +373,13 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
             ghlData && { label: 'GHL AI Leads', color: '#22d3a0' },
             gravityData && { label: 'Gravity Forms', color: '#9f7aea' },
           ].filter(Boolean).map((t: any) => (
-            <span key={t.label} style={{ fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: `${t.color}22`, color: t.color, border: `1px solid ${t.color}44` }}>{t.label}</span>
+            <span key={t.label} style={{ fontSize: 12, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: `${t.color}22`, color: t.color, border: `1px solid ${t.color}44` }}>{t.label}</span>
           ))}
         </div>
         <div style={{ position: 'absolute', bottom: 28, right: 40, textAlign: 'right' }}>
-          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>Prepared by</div>
-          <div style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.5)' }}>{session.user?.name}</div>
-          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>{today}</div>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>Prepared by</div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.5)' }}>{session.user?.name}</div>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>{today}</div>
         </div>
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg, #5b7fff, #9f7aea, #22d3a0)' }} />
       </div>
@@ -400,7 +400,7 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
         <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 8, padding: 12 }}>
-          <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Device Breakdown</div>
+          <div style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Device Breakdown</div>
           {(() => {
             const total = ga4Data.devices.reduce((a: number, x: any) => a + x.sessions, 0)
             const colors = ['#5b7fff', '#22d3a0', '#f97316']
@@ -409,8 +409,8 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
               return (
                 <div key={d.device} style={{ marginBottom: 7 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-                    <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.6)', textTransform: 'capitalize' }}>{d.device}</span>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: colors[i % colors.length] }}>{pct}%</span>
+                    <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', textTransform: 'capitalize' }}>{d.device}</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: colors[i % colors.length] }}>{pct}%</span>
                   </div>
                   <div style={{ height: 4, borderRadius: 2, background: 'rgba(255,255,255,0.07)' }}>
                     <div style={{ height: '100%', borderRadius: 2, width: `${pct}%`, background: colors[i % colors.length] }} />
@@ -421,11 +421,11 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
           })()}
         </div>
         <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 8, padding: 12 }}>
-          <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Top Countries</div>
+          <div style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Top Countries</div>
           {ga4Data.countries.slice(0, 5).map((c: any) => (
             <div key={c.country} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-              <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.6)' }}>{c.country}</span>
-              <span style={{ fontSize: 10, fontWeight: 700, color: '#f97316' }}>{c.sessions.toLocaleString()}</span>
+              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>{c.country}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: '#f97316' }}>{c.sessions.toLocaleString()}</span>
             </div>
           ))}
         </div>
@@ -445,15 +445,15 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
         <StatBox label="Avg. Position" value={String(gscData.summary.position)} color="#f97316" />
       </div>
       <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 8, overflow: 'hidden' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto auto', padding: '7px 14px', background: 'rgba(255,255,255,0.04)', fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.4)', gap: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto auto', padding: '7px 14px', background: 'rgba(255,255,255,0.04)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.4)', gap: 12 }}>
           <span>Query</span><span>Clicks</span><span>Impressions</span><span>CTR</span>
         </div>
         {gscData.queries.slice(0, 7).map((q: any, i: number) => (
-          <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto auto', padding: '7px 14px', borderTop: '1px solid rgba(255,255,255,0.05)', fontSize: 11, gap: 12, alignItems: 'center' }}>
+          <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto auto', padding: '7px 14px', borderTop: '1px solid rgba(255,255,255,0.05)', fontSize: 13, gap: 12, alignItems: 'center' }}>
             <span style={{ color: 'rgba(255,255,255,0.8)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{q.query}</span>
             <span style={{ color: '#5b7fff', fontWeight: 700, textAlign: 'right' }}>{q.clicks}</span>
             <span style={{ color: 'rgba(255,255,255,0.4)', textAlign: 'right' }}>{q.impressions.toLocaleString()}</span>
-            <span style={{ fontSize: 9, fontWeight: 700, padding: '2px 7px', borderRadius: 8, background: q.ctr > 3 ? 'rgba(34,211,160,0.15)' : 'rgba(240,180,41,0.15)', color: q.ctr > 3 ? '#22d3a0' : '#f0b429', textAlign: 'center' }}>{q.ctr}%</span>
+            <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 7px', borderRadius: 8, background: q.ctr > 3 ? 'rgba(34,211,160,0.15)' : 'rgba(240,180,41,0.15)', color: q.ctr > 3 ? '#22d3a0' : '#f0b429', textAlign: 'center' }}>{q.ctr}%</span>
           </div>
         ))}
       </div>
@@ -471,7 +471,7 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
         <StatBox label="Voice Calls" value={fmtN(ghlData.summary.totalCalls)} color="#f0b429" />
       </div>
       <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 8, padding: 16, marginBottom: 10 }}>
-        <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Lead Pipeline</div>
+        <div style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Lead Pipeline</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8 }}>
           {[
             { label: 'New', value: ghlData.pipeline.new, color: '#5b7fff' },
@@ -482,7 +482,7 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
           ].map(s => (
             <div key={s.label} style={{ textAlign: 'center', padding: 10, background: 'rgba(255,255,255,0.04)', borderRadius: 8, borderBottom: `3px solid ${s.color}` }}>
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 24, fontWeight: 800, color: s.color }}>{s.value}</div>
-              <div style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'rgba(255,255,255,0.4)', marginTop: 4 }}>{s.label}</div>
+              <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'rgba(255,255,255,0.4)', marginTop: 4 }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -507,14 +507,14 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
         <StatBox label="Trash Entries" value={String(gravityData.summary.statusCounts?.trash ?? 0)} color="#f56565" />
       </div>
       <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 8, overflow: 'hidden' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', padding: '7px 14px', background: 'rgba(255,255,255,0.04)', fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.4)', gap: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', padding: '7px 14px', background: 'rgba(255,255,255,0.04)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.4)', gap: 12 }}>
           <span>Form Name</span><span>Submissions</span><span>Status</span>
         </div>
         {gravityData.forms.slice(0, 5).map((form: any) => (
-          <div key={form.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', padding: '8px 14px', borderTop: '1px solid rgba(255,255,255,0.05)', fontSize: 11, gap: 12, alignItems: 'center' }}>
+          <div key={form.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', padding: '8px 14px', borderTop: '1px solid rgba(255,255,255,0.05)', fontSize: 13, gap: 12, alignItems: 'center' }}>
             <span style={{ color: 'rgba(255,255,255,0.8)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{form.title}</span>
             <span style={{ color: '#9f7aea', fontWeight: 700, textAlign: 'right' }}>{form.total_count}</span>
-            <span style={{ fontSize: 9, fontWeight: 700, padding: '2px 8px', borderRadius: 8, background: form.is_active ? 'rgba(34,211,160,0.15)' : 'rgba(245,101,101,0.15)', color: form.is_active ? '#22d3a0' : '#f56565', textAlign: 'center' }}>
+            <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 8, background: form.is_active ? 'rgba(34,211,160,0.15)' : 'rgba(245,101,101,0.15)', color: form.is_active ? '#22d3a0' : '#f56565', textAlign: 'center' }}>
               {form.is_active ? '● Active' : '● Inactive'}
             </span>
           </div>
@@ -529,12 +529,12 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
       <div style={{ position: 'absolute', top: -60, right: -60, width: 280, height: 280, borderRadius: '50%', background: 'radial-gradient(circle, rgba(91,127,255,0.15) 0%, transparent 70%)' }} />
       <div style={{ position: 'relative' }}>
         <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 22, fontWeight: 800, color: '#fff', marginBottom: 6 }}>Summary</div>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 20 }}>Key performance highlights for {name}</div>
+        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginBottom: 20 }}>Key performance highlights for {name}</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
           {ga4Data && (
             <div style={{ background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.2)', borderRadius: 10, padding: 14 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: '#f97316', marginBottom: 8 }}>📈 GA4 Analytics</div>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#f97316', marginBottom: 8 }}>📈 GA4 Analytics</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>
                 {fmtN(ga4Data.summary.sessions)} sessions · {fmtN(ga4Data.summary.users)} users<br />
                 {ga4Data.summary.bounceRate}% bounce · {ga4Data.summary.convRate}% conversion
               </div>
@@ -542,8 +542,8 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
           )}
           {gscData && (
             <div style={{ background: 'rgba(91,127,255,0.08)', border: '1px solid rgba(91,127,255,0.2)', borderRadius: 10, padding: 14 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: '#5b7fff', marginBottom: 8 }}>🔍 Search Console</div>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#5b7fff', marginBottom: 8 }}>🔍 Search Console</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>
                 {fmtN(gscData.summary.clicks)} clicks · {fmtN(gscData.summary.impressions)} impressions<br />
                 {gscData.summary.ctr}% CTR · avg. position {gscData.summary.position}
               </div>
@@ -551,8 +551,8 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
           )}
           {ghlData && (
             <div style={{ background: 'rgba(34,211,160,0.08)', border: '1px solid rgba(34,211,160,0.2)', borderRadius: 10, padding: 14 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: '#22d3a0', marginBottom: 8 }}>🤖 GHL AI Leads</div>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#22d3a0', marginBottom: 8 }}>🤖 GHL AI Leads</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>
                 {fmtN(ghlData.summary.totalContacts)} contacts · {fmtN(ghlData.summary.totalCalls)} calls<br />
                 {ghlData.summary.wonOpportunities} deals won · {ghlData.summary.openOpportunities} open
               </div>
@@ -560,15 +560,15 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
           )}
           {gravityData && (
             <div style={{ background: 'rgba(159,122,234,0.08)', border: '1px solid rgba(159,122,234,0.2)', borderRadius: 10, padding: 14 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: '#9f7aea', marginBottom: 8 }}>📋 Gravity Forms</div>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#9f7aea', marginBottom: 8 }}>📋 Gravity Forms</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>
                 {gravityData.summary.totalSubmissions} total submissions<br />
                 {gravityData.summary.activeForms} active forms · {gravityData.summary.statusCounts?.spam ?? 0} spam
               </div>
             </div>
           )}
         </div>
-        <div style={{ position: 'absolute', bottom: -180, left: 0, right: 0, textAlign: 'center', fontSize: 10, color: 'rgba(255,255,255,0.2)' }}>
+        <div style={{ position: 'absolute', bottom: -180, left: 0, right: 0, textAlign: 'center', fontSize: 12, color: 'rgba(255,255,255,0.2)' }}>
           Generated by NexGen Analytics · {today}
         </div>
       </div>
@@ -579,8 +579,8 @@ function SlideRenderer({ slideId, project, ga4Data, gscData, ghlData, gravityDat
   return (
     <div style={{ ...slideBase, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8 }}>
       <div style={{ fontSize: 32 }}>📭</div>
-      <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>No data available for this slide</div>
-      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>Connect the integration or toggle it on in the sidebar</div>
+      <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.4)' }}>No data available for this slide</div>
+      <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.25)' }}>Connect the integration or toggle it on in the sidebar</div>
     </div>
   )
 }

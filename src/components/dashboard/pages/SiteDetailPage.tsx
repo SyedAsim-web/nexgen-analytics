@@ -62,7 +62,7 @@ const saveIntegration = async (platform: string, config: any) => {
 
   return (
     <div>
-      <button onClick={onBack} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--text2)', marginBottom: 16, padding: '6px 10px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, cursor: 'pointer' }}>
+      <button onClick={onBack} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 14, color: 'var(--text2)', marginBottom: 16, padding: '6px 10px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, cursor: 'pointer' }}>
         <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7" strokeLinecap="round"/></svg>
         All Websites
       </button>
@@ -70,10 +70,10 @@ const saveIntegration = async (platform: string, config: any) => {
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h1 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{project.name}</h1>
-          <p style={{ fontSize: 13, color: 'var(--text3)' }}>{project.domain}</p>
+          <p style={{ fontSize: 15, color: 'var(--text3)' }}>{project.domain}</p>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={onPresent} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+          <button onClick={onPresent} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
             Present This Site
           </button>
         </div>
@@ -82,7 +82,7 @@ const saveIntegration = async (platform: string, config: any) => {
       {/* Tabs */}
       <div style={{ display: 'flex', gap: 2, marginBottom: 20, background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 10, padding: 3, width: 'fit-content' }}>
         {tabs.map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)} style={{ padding: '7px 16px', borderRadius: 8, fontSize: 13, fontWeight: tab === t.id ? 600 : 400, color: tab === t.id ? 'var(--text)' : 'var(--text3)', background: tab === t.id ? 'var(--bg2)' : 'none', border: 'none', cursor: 'pointer', transition: 'all 0.15s', boxShadow: tab === t.id ? '0 1px 4px rgba(0,0,0,0.12)' : 'none' }}>
+          <button key={t.id} onClick={() => setTab(t.id)} style={{ padding: '7px 16px', borderRadius: 8, fontSize: 15, fontWeight: tab === t.id ? 600 : 400, color: tab === t.id ? 'var(--text)' : 'var(--text3)', background: tab === t.id ? 'var(--bg2)' : 'none', border: 'none', cursor: 'pointer', transition: 'all 0.15s', boxShadow: tab === t.id ? '0 1px 4px rgba(0,0,0,0.12)' : 'none' }}>
             {t.label}
           </button>
         ))}
@@ -104,12 +104,12 @@ const saveIntegration = async (platform: string, config: any) => {
                 <div key={int.key} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 16, position: 'relative', overflow: 'hidden' }}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2.5, background: int.color }} />
                   <div style={{ fontSize: 22, marginBottom: 8 }}>{int.icon}</div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>{int.label}</div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12 }}>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>{int.label}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 14 }}>
                     <div style={{ width: 6, height: 6, borderRadius: '50%', background: connected ? '#22d3a0' : 'var(--text3)' }} />
                     <span style={{ color: connected ? '#22d3a0' : 'var(--text3)', fontWeight: 600 }}>{connected ? 'Connected' : 'Not connected'}</span>
                   </div>
-                  {lastSync && <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 4 }}>Last sync: {new Date(lastSync).toLocaleDateString()}</div>}
+                  {lastSync && <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 4 }}>Last sync: {new Date(lastSync).toLocaleDateString()}</div>}
                 </div>
               )
             })}
@@ -117,10 +117,10 @@ const saveIntegration = async (platform: string, config: any) => {
 
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 20 }}>
             <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Getting Started</div>
-            <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 12 }}>
+            <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 12 }}>
               To see real analytics data, go to the <strong style={{ color: 'var(--text)' }}>Integrations</strong> tab and connect your platforms. Once connected, NexGen will use your Google account to fetch live data from Search Console and GA4.
             </p>
-            <button onClick={() => setTab('integrations')} style={{ padding: '8px 16px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+            <button onClick={() => setTab('integrations')} style={{ padding: '8px 16px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
               Set Up Integrations →
             </button>
           </div>
@@ -203,21 +203,21 @@ const saveIntegration = async (platform: string, config: any) => {
         <div>
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 20, marginBottom: 16 }}>
             <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>Invite Team Member</div>
-            <p style={{ fontSize: 13, color: 'var(--text3)', marginBottom: 16, lineHeight: 1.6 }}>Team members will only be able to see this website's data. They cannot access your other projects unless invited.</p>
+            <p style={{ fontSize: 15, color: 'var(--text3)', marginBottom: 16, lineHeight: 1.6 }}>Team members will only be able to see this website's data. They cannot access your other projects unless invited.</p>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              <input value={teamEmail} onChange={e => setTeamEmail(e.target.value)} placeholder="teammate@example.com" style={{ flex: 1, minWidth: 200, padding: '9px 12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none' }} />
-              <select value={teamRole} onChange={e => setTeamRole(e.target.value)} style={{ padding: '9px 12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+              <input value={teamEmail} onChange={e => setTeamEmail(e.target.value)} placeholder="teammate@example.com" style={{ flex: 1, minWidth: 200, padding: '9px 12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none' }} />
+              <select value={teamRole} onChange={e => setTeamRole(e.target.value)} style={{ padding: '9px 12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
                 <option value="viewer">Viewer — read only</option>
                 <option value="editor">Editor — can edit integrations</option>
                 <option value="admin">Admin — full access</option>
               </select>
-              <button onClick={inviteTeam} style={{ padding: '9px 18px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>Send Invite</button>
+              <button onClick={inviteTeam} style={{ padding: '9px 18px', background: '#5b7fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>Send Invite</button>
             </div>
-            {teamMsg && <div style={{ marginTop: 12, padding: '10px 14px', background: 'rgba(34,211,160,0.1)', border: '1px solid rgba(34,211,160,0.3)', borderRadius: 8, fontSize: 13, color: '#22d3a0' }}>{teamMsg}</div>}
+            {teamMsg && <div style={{ marginTop: 12, padding: '10px 14px', background: 'rgba(34,211,160,0.1)', border: '1px solid rgba(34,211,160,0.3)', borderRadius: 8, fontSize: 15, color: '#22d3a0' }}>{teamMsg}</div>}
           </div>
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 16 }}>
             <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Role Permissions</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 0, fontSize: 12 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 0, fontSize: 14 }}>
               {[['Permission', 'Viewer', 'Editor', 'Admin'], ['View analytics', '✓', '✓', '✓'], ['Edit integrations', '—', '✓', '✓'], ['Invite team', '—', '—', '✓'], ['Delete project', '—', '—', '✓']].map((row, i) => (
                 row.map((cell, j) => (
                   <div key={`${i}-${j}`} style={{ padding: '8px 12px', borderBottom: '1px solid var(--border)', fontWeight: i === 0 || j === 0 ? 600 : 400, color: i === 0 ? 'var(--text3)' : cell === '✓' ? '#22d3a0' : cell === '—' ? 'var(--text3)' : 'var(--text)', background: i === 0 ? 'var(--bg3)' : 'transparent' }}>{cell}</div>
@@ -240,33 +240,33 @@ function IntegCard({ title, icon, color, connected, description, fields, form, s
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
             <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>{title}</div>
-            <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: connected ? 'rgba(34,211,160,0.1)' : 'var(--bg4)', color: connected ? '#22d3a0' : 'var(--text3)' }}>
+            <span style={{ fontSize: 12, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: connected ? 'rgba(34,211,160,0.1)' : 'var(--bg4)', color: connected ? '#22d3a0' : 'var(--text3)' }}>
               {connected ? '✓ Connected' : 'Not connected'}
             </span>
           </div>
-          <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>{description}</p>
+          <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.6 }}>{description}</p>
         </div>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 10, marginBottom: 12 }}>
         {fields.map((f: any) => (
           <div key={f.key}>
-            <label style={{ fontSize: 11, fontWeight: 600, color: 'var(--text2)', marginBottom: 5, display: 'block' }}>{f.label}</label>
+            <label style={{ fontSize: 13, fontWeight: 600, color: 'var(--text2)', marginBottom: 5, display: 'block' }}>{f.label}</label>
             <input
               type={f.type || 'text'}
               value={form[f.key]}
               onChange={(e: any) => setForm((prev: any) => ({ ...prev, [f.key]: e.target.value }))}
               placeholder={f.placeholder}
-              style={{ width: '100%', padding: '9px 12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none' }}
+              style={{ width: '100%', padding: '9px 12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none' }}
             />
           </div>
         ))}
       </div>
       {helpText && (
-        <div style={{ background: 'rgba(91,127,255,0.08)', border: '1px solid rgba(91,127,255,0.15)', borderRadius: 8, padding: '8px 12px', fontSize: 12, color: 'var(--text2)', marginBottom: 12, lineHeight: 1.6 }}>
+        <div style={{ background: 'rgba(91,127,255,0.08)', border: '1px solid rgba(91,127,255,0.15)', borderRadius: 8, padding: '8px 12px', fontSize: 14, color: 'var(--text2)', marginBottom: 12, lineHeight: 1.6 }}>
           💡 <strong>Where to find this:</strong> {helpText}
         </div>
       )}
-      <button onClick={onSave} disabled={saving} style={{ padding: '8px 18px', background: color, color: '#fff', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: saving ? 'not-allowed' : 'pointer', opacity: saving ? 0.7 : 1 }}>
+      <button onClick={onSave} disabled={saving} style={{ padding: '8px 18px', background: color, color: '#fff', border: 'none', borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: saving ? 'not-allowed' : 'pointer', opacity: saving ? 0.7 : 1 }}>
         {saving ? 'Saving…' : connected ? 'Update Connection' : 'Connect'}
       </button>
     </div>

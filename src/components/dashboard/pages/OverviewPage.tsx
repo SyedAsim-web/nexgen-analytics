@@ -27,7 +27,7 @@ const TOOLTIP_STYLE = {
   background: 'var(--bg3, #1e2436)',
   border: '1px solid var(--border)',
   borderRadius: 8,
-  fontSize: 12,
+  fontSize: 14,
   color: 'var(--text)',
 }
 
@@ -130,7 +130,7 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
         <h1 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
           Welcome back, {session.user?.name?.split(' ')[0]} 👋
         </h1>
-        <p style={{ fontSize: 13, color: 'var(--text3)' }}>Let's get started — add your first website to see analytics here.</p>
+        <p style={{ fontSize: 15, color: 'var(--text3)' }}>Let's get started — add your first website to see analytics here.</p>
       </div>
       <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 16, padding: 56, textAlign: 'center' }}>
         <div style={{ fontSize: 52, marginBottom: 16 }}>🚀</div>
@@ -140,7 +140,7 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
         </p>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
           {['Google Search Console', 'GA4 Analytics', 'GHL Voice AI', 'Gravity Forms'].map(pl => (
-            <span key={pl} style={{ fontSize: 12, padding: '4px 12px', background: 'rgba(91,127,255,0.1)', color: '#5b7fff', borderRadius: 20, fontWeight: 600 }}>{pl}</span>
+            <span key={pl} style={{ fontSize: 14, padding: '4px 12px', background: 'rgba(91,127,255,0.1)', color: '#5b7fff', borderRadius: 20, fontWeight: 600 }}>{pl}</span>
           ))}
         </div>
       </div>
@@ -160,16 +160,16 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
           <h1 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
             Welcome back, {session.user?.name?.split(' ')[0]} 👋
           </h1>
-          <p style={{ fontSize: 13, color: 'var(--text3)' }}>
+          <p style={{ fontSize: 15, color: 'var(--text3)' }}>
             Analytics overview for <strong style={{ color: 'var(--text)' }}>{selectedProject?.name || '…'}</strong>
           </p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 12, color: 'var(--text3)' }}>Website:</span>
+          <span style={{ fontSize: 14, color: 'var(--text3)' }}>Website:</span>
           <select
             value={selectedId}
             onChange={e => setSelectedId(e.target.value)}
-            style={{ padding: '8px 14px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, fontWeight: 600, outline: 'none', cursor: 'pointer', minWidth: 180 }}
+            style={{ padding: '8px 14px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, fontWeight: 600, outline: 'none', cursor: 'pointer', minWidth: 180 }}
           >
             {projects.map(p => <option key={p.id} value={p.id}>{p.name || p.domain}</option>)}
           </select>
@@ -185,7 +185,7 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
             { key: 'ghl', label: 'GHL Voice AI', color: '#22d3a0', connected: ghl?.connected },
             { key: 'gravity', label: 'Gravity Forms', color: '#9f7aea', connected: gravity?.connected },
           ].map(int => (
-            <div key={int.key} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 12px', background: int.connected ? `${int.color}14` : 'var(--bg2)', border: `1px solid ${int.connected ? `${int.color}40` : 'var(--border)'}`, borderRadius: 20, fontSize: 12, fontWeight: 600, color: int.connected ? int.color : 'var(--text3)' }}>
+            <div key={int.key} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 12px', background: int.connected ? `${int.color}14` : 'var(--bg2)', border: `1px solid ${int.connected ? `${int.color}40` : 'var(--border)'}`, borderRadius: 20, fontSize: 14, fontWeight: 600, color: int.connected ? int.color : 'var(--text3)' }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: int.connected ? int.color : 'var(--text3)', display: 'inline-block', flexShrink: 0 }} />
               {int.label}
               <span style={{ fontWeight: 400, opacity: 0.75 }}>{int.connected ? '✓' : '—'}</span>
@@ -200,7 +200,7 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
           <SectionTitle icon="📈" title="Google Analytics 4" />
           {ga4?.connected && (
             <select value={ga4Days} onChange={e => setGa4Days(parseInt(e.target.value))}
-              style={{ padding: '6px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 12, outline: 'none', cursor: 'pointer' }}>
+              style={{ padding: '6px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 14, outline: 'none', cursor: 'pointer' }}>
               <option value={7}>Last 7 days</option>
               <option value={28}>Last 28 days</option>
               <option value={90}>Last 90 days</option>
@@ -237,8 +237,8 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 260px', gap: 14 }}>
               <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 16px 8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                  <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>Sessions & Users — last {ga4Days} days</span>
-                  <div style={{ display: 'flex', gap: 12, fontSize: 11, color: 'var(--text3)' }}>
+                  <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>Sessions & Users — last {ga4Days} days</span>
+                  <div style={{ display: 'flex', gap: 12, fontSize: 13, color: 'var(--text3)' }}>
                     <LegendDot color="#5b7fff" label="Sessions" />
                     <LegendDot color="#22d3a0" label="Users" />
                   </div>
@@ -254,8 +254,8 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                    <XAxis dataKey="dateLabel" tick={{ fontSize: 10, fill: 'var(--text3)' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
-                    <YAxis tick={{ fontSize: 10, fill: 'var(--text3)' }} tickLine={false} axisLine={false} tickFormatter={fmtN} />
+                    <XAxis dataKey="dateLabel" tick={{ fontSize: 12, fill: 'var(--text3)' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
+                    <YAxis tick={{ fontSize: 12, fill: 'var(--text3)' }} tickLine={false} axisLine={false} tickFormatter={fmtN} />
                     <Tooltip contentStyle={TOOLTIP_STYLE} />
                     <Area type="monotone" dataKey="sessions" name="Sessions" stroke="#5b7fff" strokeWidth={2} fill="url(#ovga4s)" dot={false} />
                     <Area type="monotone" dataKey="users" name="Users" stroke="#22d3a0" strokeWidth={2} fill="url(#ovga4u)" dot={false} />
@@ -264,7 +264,7 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
               </div>
               <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <div>
-                  <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Device Breakdown</div>
+                  <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Device Breakdown</div>
                   {(() => {
                     const total = ga4Data.devices.reduce((a: number, x: any) => a + x.sessions, 0)
                     const colors = ['#5b7fff', '#22d3a0', '#f97316']
@@ -273,8 +273,8 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
                       return (
                         <div key={d.device} style={{ marginBottom: 12 }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                            <span style={{ fontSize: 12, color: 'var(--text2)', textTransform: 'capitalize' }}>{d.device}</span>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>{pct}%</span>
+                            <span style={{ fontSize: 14, color: 'var(--text2)', textTransform: 'capitalize' }}>{d.device}</span>
+                            <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>{pct}%</span>
                           </div>
                           <div style={{ height: 5, borderRadius: 3, background: 'rgba(255,255,255,0.07)' }}>
                             <div style={{ height: '100%', borderRadius: 3, background: colors[i % colors.length], width: `${pct}%`, transition: 'width 0.6s ease' }} />
@@ -285,11 +285,11 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
                   })()}
                 </div>
                 <div>
-                  <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>Top Countries</div>
+                  <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>Top Countries</div>
                   {ga4Data.countries.slice(0, 5).map((c: any) => (
                     <div key={c.country} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                      <span style={{ fontSize: 12, color: 'var(--text2)' }}>{c.country}</span>
-                      <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text)' }}>{c.sessions.toLocaleString()}</span>
+                      <span style={{ fontSize: 14, color: 'var(--text2)' }}>{c.country}</span>
+                      <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)' }}>{c.sessions.toLocaleString()}</span>
                     </div>
                   ))}
                 </div>
@@ -330,8 +330,8 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 300px', gap: 14 }}>
               <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 16px 8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                  <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>Clicks & Impressions — last 28 days</span>
-                  <div style={{ display: 'flex', gap: 12, fontSize: 11, color: 'var(--text3)' }}>
+                  <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>Clicks & Impressions — last 28 days</span>
+                  <div style={{ display: 'flex', gap: 12, fontSize: 13, color: 'var(--text3)' }}>
                     <LegendDot color="#5b7fff" label="Clicks" />
                     <LegendDot color="#f0b429" label="Impressions" />
                   </div>
@@ -347,8 +347,8 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                    <XAxis dataKey="dateLabel" tick={{ fontSize: 10, fill: 'var(--text3)' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
-                    <YAxis tick={{ fontSize: 10, fill: 'var(--text3)' }} tickLine={false} axisLine={false} tickFormatter={fmtN} />
+                    <XAxis dataKey="dateLabel" tick={{ fontSize: 12, fill: 'var(--text3)' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
+                    <YAxis tick={{ fontSize: 12, fill: 'var(--text3)' }} tickLine={false} axisLine={false} tickFormatter={fmtN} />
                     <Tooltip contentStyle={TOOLTIP_STYLE} />
                     <Area type="monotone" dataKey="clicks" name="Clicks" stroke="#5b7fff" strokeWidth={2} fill="url(#ovgscc)" dot={false} />
                     <Area type="monotone" dataKey="impressions" name="Impressions" stroke="#f0b429" strokeWidth={2} fill="url(#ovgsci)" dot={false} />
@@ -357,19 +357,19 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
               </div>
               <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
                 <div style={{ padding: '13px 16px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>Top Queries</span>
-                  <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: 'rgba(91,127,255,0.1)', color: '#5b7fff' }}>Live</span>
+                  <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>Top Queries</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: 'rgba(91,127,255,0.1)', color: '#5b7fff' }}>Live</span>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', padding: '6px 16px', background: 'var(--bg3)' }}>
                   {['Query', 'Clicks', 'CTR'].map(h => (
-                    <span key={h} style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)' }}>{h}</span>
+                    <span key={h} style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)' }}>{h}</span>
                   ))}
                 </div>
                 {gscData.queries.slice(0, 9).map((q: any, i: number) => (
                   <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center', padding: '8px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', gap: 12 }}>
-                    <span style={{ fontSize: 12, color: 'var(--text)', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{q.query}</span>
-                    <span style={{ fontSize: 12, color: 'var(--text3)', textAlign: 'right' }}>{q.clicks}</span>
-                    <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 8, background: q.ctr > 3 ? 'rgba(34,211,160,0.12)' : 'rgba(240,180,41,0.12)', color: q.ctr > 3 ? '#22d3a0' : '#f0b429', textAlign: 'center' }}>{q.ctr}%</span>
+                    <span style={{ fontSize: 14, color: 'var(--text)', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{q.query}</span>
+                    <span style={{ fontSize: 14, color: 'var(--text3)', textAlign: 'right' }}>{q.clicks}</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, padding: '2px 7px', borderRadius: 8, background: q.ctr > 3 ? 'rgba(34,211,160,0.12)' : 'rgba(240,180,41,0.12)', color: q.ctr > 3 ? '#22d3a0' : '#f0b429', textAlign: 'center' }}>{q.ctr}%</span>
                   </div>
                 ))}
               </div>
@@ -398,7 +398,7 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
             <div style={{ background: 'var(--bg2)', border: '1px solid rgba(34,211,160,0.3)', borderRadius: 12, padding: 20 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
                 <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22d3a0' }} />
-                <span style={{ fontSize: 13, fontWeight: 700, color: '#22d3a0' }}>GHL Connected</span>
+                <span style={{ fontSize: 15, fontWeight: 700, color: '#22d3a0' }}>GHL Connected</span>
               </div>
               {ghlLoading && <ChartSkeleton label="Loading GHL data…" />}
               {ghlError && <ErrorBox msg={ghlError} />}
@@ -413,7 +413,7 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
                       <div key={s.label} style={{ background: 'var(--bg3)', borderRadius: 8, padding: '10px 12px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
                         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: s.color }} />
                         <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', lineHeight: 1, marginBottom: 4 }}>{fmtN(s.value)}</div>
-                        <div style={{ fontSize: 10, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</div>
+                        <div style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</div>
                       </div>
                     ))}
                   </div>
@@ -427,14 +427,14 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
                     ].map(s => (
                       <div key={s.label} style={{ background: 'var(--bg3)', borderRadius: 6, padding: '8px 4px', textAlign: 'center' }}>
                         <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 16, fontWeight: 700, color: s.color }}>{s.value}</div>
-                        <div style={{ fontSize: 9, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{s.label}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{s.label}</div>
                       </div>
                     ))}
                   </div>
                 </>
               )}
               {!ghlLoading && !ghlError && !ghlData && (
-                <div style={{ fontSize: 12, color: 'var(--text3)', background: 'rgba(34,211,160,0.06)', borderRadius: 8, padding: '8px 12px' }}>
+                <div style={{ fontSize: 14, color: 'var(--text3)', background: 'rgba(34,211,160,0.06)', borderRadius: 8, padding: '8px 12px' }}>
                   No data available — check your API key and Location ID.
                 </div>
               )}
@@ -459,7 +459,7 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
             <div style={{ background: 'var(--bg2)', border: '1px solid rgba(159,122,234,0.3)', borderRadius: 12, padding: 20 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
                 <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#9f7aea' }} />
-                <span style={{ fontSize: 13, fontWeight: 700, color: '#9f7aea' }}>Gravity Forms Connected</span>
+                <span style={{ fontSize: 15, fontWeight: 700, color: '#9f7aea' }}>Gravity Forms Connected</span>
               </div>
               {gravityLoading && <ChartSkeleton label="Loading Gravity Forms data…" />}
               {gravityError && <ErrorBox msg={gravityError} />}
@@ -474,20 +474,20 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
                       <div key={s.label} style={{ background: 'var(--bg3)', borderRadius: 8, padding: '10px 12px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
                         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: s.color }} />
                         <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', lineHeight: 1, marginBottom: 4 }}>{s.value}</div>
-                        <div style={{ fontSize: 10, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</div>
+                        <div style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</div>
                       </div>
                     ))}
                   </div>
                   {gravityData.forms?.slice(0, 3).map((form: any) => (
                     <div key={form.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '7px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                      <span style={{ fontSize: 12, color: 'var(--text2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '65%' }}>{form.title}</span>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: '#9f7aea' }}>{form.total_count} submissions</span>
+                      <span style={{ fontSize: 14, color: 'var(--text2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '65%' }}>{form.title}</span>
+                      <span style={{ fontSize: 14, fontWeight: 700, color: '#9f7aea' }}>{form.total_count} submissions</span>
                     </div>
                   ))}
                 </>
               )}
               {!gravityLoading && !gravityError && !gravityData && (
-                <div style={{ fontSize: 12, color: 'var(--text3)', background: 'rgba(159,122,234,0.06)', borderRadius: 8, padding: '8px 12px' }}>
+                <div style={{ fontSize: 14, color: 'var(--text3)', background: 'rgba(159,122,234,0.06)', borderRadius: 8, padding: '8px 12px' }}>
                   No data available — check your Consumer Key and Secret.
                 </div>
               )}
@@ -512,15 +512,15 @@ export default function OverviewPage({ projects, loading, session, onViewSite }:
                   onMouseEnter={e => { if (!isActive) { (e.currentTarget as HTMLDivElement).style.borderColor = '#5b7fff80'; (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-1px)' } }}
                   onMouseLeave={e => { if (!isActive) { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border)'; (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)' } }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                    <div style={{ width: 34, height: 34, borderRadius: 8, background: isActive ? 'rgba(91,127,255,0.2)' : 'linear-gradient(135deg,rgba(91,127,255,0.15),rgba(159,122,234,0.15))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: '#5b7fff', flexShrink: 0 }}>{initials}</div>
+                    <div style={{ width: 34, height: 34, borderRadius: 8, background: isActive ? 'rgba(91,127,255,0.2)' : 'linear-gradient(135deg,rgba(91,127,255,0.15),rgba(159,122,234,0.15))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: '#5b7fff', flexShrink: 0 }}>{initials}</div>
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</div>
-                      <div style={{ fontSize: 11, color: 'var(--text3)' }}>{p.domain}</div>
+                      <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text3)' }}>{p.domain}</div>
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 11, color: intCount > 0 ? '#22d3a0' : 'var(--text3)', fontWeight: 600 }}>{intCount} of 4 connected</span>
-                    <span style={{ fontSize: 11, color: isActive ? '#5b7fff' : 'var(--text3)', fontWeight: 600 }}>{isActive ? '● Viewing' : 'View →'}</span>
+                    <span style={{ fontSize: 13, color: intCount > 0 ? '#22d3a0' : 'var(--text3)', fontWeight: 600 }}>{intCount} of 4 connected</span>
+                    <span style={{ fontSize: 13, color: isActive ? '#5b7fff' : 'var(--text3)', fontWeight: 600 }}>{isActive ? '● Viewing' : 'View →'}</span>
                   </div>
                 </div>
               )
@@ -545,7 +545,7 @@ function MiniStatCard({ label, value, color }: { label: string; value: string; c
   return (
     <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2.5, background: color }} />
-      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 5 }}>{label}</div>
+      <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 5 }}>{label}</div>
       <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>{value}</div>
     </div>
   )
@@ -567,14 +567,14 @@ function NotIntegratedCard({ icon, title, description, features, color, onSetup,
     <div style={{ background: 'var(--bg2)', border: `1px solid ${color}30`, borderRadius: 12, padding: compact ? 20 : 32, textAlign: 'center' }}>
       {!compact && <div style={{ fontSize: 36, marginBottom: 12 }}>{icon}</div>}
       <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: compact ? 13 : 15, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>{title}</div>
-      <p style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14, maxWidth: 360, margin: compact ? '0 auto 14px' : '0 0 14px' }}>{description}</p>
+      <p style={{ fontSize: 14, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14, maxWidth: 360, margin: compact ? '0 auto 14px' : '0 0 14px' }}>{description}</p>
       <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 16 }}>
         {features.map(f => (
-          <span key={f} style={{ fontSize: 10, padding: '2px 9px', background: `${color}14`, color, borderRadius: 20, fontWeight: 600 }}>{f}</span>
+          <span key={f} style={{ fontSize: 12, padding: '2px 9px', background: `${color}14`, color, borderRadius: 20, fontWeight: 600 }}>{f}</span>
         ))}
       </div>
       <button onClick={onSetup}
-        style={{ padding: '7px 16px', background: color, color: '#fff', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer', opacity: 0.9 }}>
+        style={{ padding: '7px 16px', background: color, color: '#fff', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: 'pointer', opacity: 0.9 }}>
         Set Up Integration →
       </button>
     </div>
@@ -583,7 +583,7 @@ function NotIntegratedCard({ icon, title, description, features, color, onSetup,
 
 function ChartSkeleton({ label }: { label: string }) {
   return (
-    <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 120, gap: 12, marginBottom: 16, color: 'var(--text3)', fontSize: 13 }}>
+    <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 120, gap: 12, marginBottom: 16, color: 'var(--text3)', fontSize: 15 }}>
       <div style={{ width: 18, height: 18, border: '2px solid rgba(91,127,255,0.2)', borderTopColor: '#5b7fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite', flexShrink: 0 }} />
       {label}
     </div>
@@ -592,7 +592,7 @@ function ChartSkeleton({ label }: { label: string }) {
 
 function ErrorBox({ msg }: { msg: string }) {
   return (
-    <div style={{ background: 'rgba(245,101,101,0.1)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 12, padding: '14px 18px', fontSize: 13, color: '#f56565', marginBottom: 16 }}>
+    <div style={{ background: 'rgba(245,101,101,0.1)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 12, padding: '14px 18px', fontSize: 15, color: '#f56565', marginBottom: 16 }}>
       ⚠️ {msg}
     </div>
   )

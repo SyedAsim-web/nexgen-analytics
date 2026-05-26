@@ -72,9 +72,9 @@ export default function Topbar({ session, page, theme, toggleTheme, onHamburger,
 
       {/* Breadcrumb / page title */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ fontSize: 11, color: text3 }}>NexGen</span>
+        <span style={{ fontSize: 13, color: text3 }}>NexGen</span>
         <svg width="12" height="12" fill="none" stroke={text3} strokeWidth="1.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-        <span style={{ fontSize: 13, fontWeight: 600, color: dark ? '#e4e7f0' : '#0d0f14' }}>{PAGE_LABELS[page] || page}</span>
+        <span style={{ fontSize: 15, fontWeight: 600, color: dark ? '#e4e7f0' : '#0d0f14' }}>{PAGE_LABELS[page] || page}</span>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 'auto' }}>
@@ -98,7 +98,7 @@ export default function Topbar({ session, page, theme, toggleTheme, onHamburger,
         <button
           onClick={onPresent}
           className="btn-glow"
-          style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', background: 'linear-gradient(135deg,#5b7fff,#9f7aea)', color: '#fff', border: 'none', borderRadius: 9, fontSize: 12, fontWeight: 700, cursor: 'pointer', letterSpacing: '0.02em', flexShrink: 0 }}
+          style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', background: 'linear-gradient(135deg,#5b7fff,#9f7aea)', color: '#fff', border: 'none', borderRadius: 9, fontSize: 14, fontWeight: 700, cursor: 'pointer', letterSpacing: '0.02em', flexShrink: 0 }}
         >
           <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
           Present
@@ -114,13 +114,13 @@ export default function Topbar({ session, page, theme, toggleTheme, onHamburger,
             <div style={{ width: 30, height: 30, borderRadius: '50%', overflow: 'hidden', background: 'linear-gradient(135deg,#5b7fff,#9f7aea)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: `2px solid rgba(91,127,255,0.3)` }}>
               {session.user?.image
                 ? <img src={session.user.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                : <span style={{ fontSize: 11, fontWeight: 700, color: '#fff' }}>{initials}</span>}
+                : <span style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>{initials}</span>}
             </div>
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: dark ? '#e4e7f0' : '#0d0f14', lineHeight: 1.2 }}>
+              <div style={{ fontSize: 14, fontWeight: 600, color: dark ? '#e4e7f0' : '#0d0f14', lineHeight: 1.2 }}>
                 {session.user?.name?.split(' ')[0]}
               </div>
-              <div style={{ fontSize: 10, color: text3, lineHeight: 1.2 }}>NexGen Analytics</div>
+              <div style={{ fontSize: 12, color: text3, lineHeight: 1.2 }}>NexGen Analytics</div>
             </div>
             <svg width="12" height="12" fill="none" stroke={text3} strokeWidth="2" viewBox="0 0 24 24" style={{ transition: 'transform 0.2s', transform: dropOpen ? 'rotate(180deg)' : 'rotate(0)' }}>
               <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -138,8 +138,8 @@ export default function Topbar({ session, page, theme, toggleTheme, onHamburger,
             }}>
               {/* User info */}
               <div style={{ padding: '14px 14px 10px', borderBottom: `1px solid ${border}` }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: dark ? '#e4e7f0' : '#0d0f14', marginBottom: 2 }}>{session.user?.name}</div>
-                <div style={{ fontSize: 11, color: text3 }}>{session.user?.email}</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: dark ? '#e4e7f0' : '#0d0f14', marginBottom: 2 }}>{session.user?.name}</div>
+                <div style={{ fontSize: 13, color: text3 }}>{session.user?.email}</div>
               </div>
 
               {/* Nav items */}
@@ -148,7 +148,7 @@ export default function Topbar({ session, page, theme, toggleTheme, onHamburger,
                 { label: 'Team', page: 'team' as PageName, icon: <><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></> },
               ].map(item => (
                 <button key={item.page} onClick={() => { navTo(item.page); setDropOpen(false) }}
-                  style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '10px 14px', background: 'none', border: 'none', cursor: 'pointer', color: text2, fontSize: 13, textAlign: 'left', transition: 'background 0.12s' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '10px 14px', background: 'none', border: 'none', cursor: 'pointer', color: text2, fontSize: 15, textAlign: 'left', transition: 'background 0.12s' }}
                   onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = dark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)'}
                   onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = 'none'}
                 >
@@ -160,7 +160,7 @@ export default function Topbar({ session, page, theme, toggleTheme, onHamburger,
               {/* Sign out */}
               <div style={{ padding: '6px 10px 10px' }}>
                 <button onClick={() => { setDropOpen(false); onSignOut() }}
-                  style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '9px 10px', background: 'rgba(245,101,101,0.06)', border: '1px solid rgba(245,101,101,0.15)', borderRadius: 8, cursor: 'pointer', color: '#f56565', fontSize: 12, fontWeight: 600, transition: 'background 0.12s' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '9px 10px', background: 'rgba(245,101,101,0.06)', border: '1px solid rgba(245,101,101,0.15)', borderRadius: 8, cursor: 'pointer', color: '#f56565', fontSize: 14, fontWeight: 600, transition: 'background 0.12s' }}
                   onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,101,101,0.12)'}
                   onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,101,101,0.06)'}
                 >

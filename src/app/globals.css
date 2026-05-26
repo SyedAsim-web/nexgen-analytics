@@ -49,7 +49,7 @@
 
 /* ── Reset ─────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 15px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body {
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
@@ -127,9 +127,9 @@ body {
 }
 
 /* Trend badge */
-.trend-up   { color: #22d3a0; background: rgba(34,211,160,0.1);  border-radius: 6px; padding: 2px 7px; font-size: 11px; font-weight: 700; }
-.trend-down { color: #f56565; background: rgba(245,101,101,0.1); border-radius: 6px; padding: 2px 7px; font-size: 11px; font-weight: 700; }
-.trend-flat { color: #8c95ad; background: rgba(140,149,173,0.1); border-radius: 6px; padding: 2px 7px; font-size: 11px; font-weight: 700; }
+.trend-up   { color: #22d3a0; background: rgba(34,211,160,0.1);  border-radius: 6px; padding: 2px 7px; font-size: 13px; font-weight: 700; }
+.trend-down { color: #f56565; background: rgba(245,101,101,0.1); border-radius: 6px; padding: 2px 7px; font-size: 13px; font-weight: 700; }
+.trend-flat { color: #8c95ad; background: rgba(140,149,173,0.1); border-radius: 6px; padding: 2px 7px; font-size: 13px; font-weight: 700; }
 
 /* Status dot */
 .dot-online  { width: 7px; height: 7px; border-radius: 50%; background: #22d3a0; display: inline-block; box-shadow: 0 0 6px rgba(34,211,160,0.6); }

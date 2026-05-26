@@ -112,18 +112,18 @@ export default function GravityPage({ projects }: Props) {
           <h1 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
             Gravity Forms
           </h1>
-          <p style={{ fontSize: 13, color: 'var(--text3)' }}>
+          <p style={{ fontSize: 15, color: 'var(--text3)' }}>
             Real form submission data from your WordPress sites
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <select value={period} onChange={e => setPeriod(e.target.value as Period)}
-            style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+            style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
             {PERIODS.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
           </select>
           {gravityProjects.length > 0 && (
             <select value={selected} onChange={e => setSelected(e.target.value)}
-              style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
+              style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
               {gravityProjects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
             </select>
           )}
@@ -135,7 +135,7 @@ export default function GravityPage({ projects }: Props) {
         <div style={{ background: 'var(--bg2)', border: '1px solid rgba(159,122,234,0.3)', borderRadius: 12, padding: 32, textAlign: 'center' }}>
           <div style={{ fontSize: 40, marginBottom: 12 }}>📋</div>
           <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>No Gravity Forms sites connected</div>
-          <p style={{ fontSize: 13, color: 'var(--text3)', lineHeight: 1.7, maxWidth: 440, margin: '0 auto' }}>
+          <p style={{ fontSize: 15, color: 'var(--text3)', lineHeight: 1.7, maxWidth: 440, margin: '0 auto' }}>
             Go to <strong style={{ color: 'var(--text)' }}>All Websites → your site → Integrations</strong> and connect Gravity Forms to see real submission data here.
           </p>
         </div>
@@ -146,16 +146,16 @@ export default function GravityPage({ projects }: Props) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 200 }}>
           <div style={{ textAlign: 'center' }}>
             <div style={{ width: 28, height: 28, border: '3px solid rgba(159,122,234,0.2)', borderTopColor: '#9f7aea', borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto 12px' }} />
-            <div style={{ fontSize: 13, color: 'var(--text3)' }}>Loading form data…</div>
+            <div style={{ fontSize: 15, color: 'var(--text3)' }}>Loading form data…</div>
           </div>
         </div>
       )}
 
       {/* Error */}
       {error && (
-        <div style={{ background: 'rgba(245,101,101,0.1)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 12, padding: '16px 20px', fontSize: 13, color: '#f56565', marginBottom: 16, lineHeight: 1.6 }}>
+        <div style={{ background: 'rgba(245,101,101,0.1)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 12, padding: '16px 20px', fontSize: 15, color: '#f56565', marginBottom: 16, lineHeight: 1.6 }}>
           ⚠️ {error}
-          <div style={{ marginTop: 8, fontSize: 12, color: 'var(--text3)' }}>
+          <div style={{ marginTop: 8, fontSize: 14, color: 'var(--text3)' }}>
             Make sure your WordPress REST API is enabled and the Consumer Key/Secret have read access to form entries.
           </div>
         </div>
@@ -178,7 +178,7 @@ export default function GravityPage({ projects }: Props) {
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2.5, background: s.color }} />
                 <div style={{ fontSize: 18, marginBottom: 8 }}>{s.icon}</div>
                 <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 24, fontWeight: 700, color: 'var(--text)', lineHeight: 1, marginBottom: 4 }}>{s.value}</div>
-                <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)' }}>{s.label}</div>
+                <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)' }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -187,14 +187,14 @@ export default function GravityPage({ projects }: Props) {
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden', marginBottom: 20 }}>
             <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>Forms Performance</div>
-              <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: 'rgba(159,122,234,0.1)', color: '#9f7aea' }}>Live Data</span>
+              <span style={{ fontSize: 12, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: 'rgba(159,122,234,0.1)', color: '#9f7aea' }}>Live Data</span>
             </div>
             <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 15 }}>
                 <thead>
                   <tr>
                     {['Form Name', 'Submissions', 'Status', 'Share'].map(h => (
-                      <th key={h} style={{ padding: '9px 16px', textAlign: 'left', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg3)', borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
+                      <th key={h} style={{ padding: '9px 16px', textAlign: 'left', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg3)', borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -206,13 +206,13 @@ export default function GravityPage({ projects }: Props) {
                       <tr key={form.id} style={{ borderBottom: '1px solid var(--border)' }}>
                         <td style={{ padding: '12px 16px' }}>
                           <div style={{ fontWeight: 600, color: 'var(--text)' }}>{form.title}</div>
-                          <div style={{ fontSize: 11, color: 'var(--text3)' }}>Form ID: {form.id}</div>
+                          <div style={{ fontSize: 13, color: 'var(--text3)' }}>Form ID: {form.id}</div>
                         </td>
                         <td style={{ padding: '12px 16px' }}>
                           <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>{form.total_count.toLocaleString()}</div>
                         </td>
                         <td style={{ padding: '12px 16px' }}>
-                          <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 10, background: active ? 'rgba(34,211,160,0.1)' : 'rgba(245,101,101,0.1)', color: active ? '#22d3a0' : '#f56565' }}>
+                          <span style={{ fontSize: 12, fontWeight: 700, padding: '3px 9px', borderRadius: 10, background: active ? 'rgba(34,211,160,0.1)' : 'rgba(245,101,101,0.1)', color: active ? '#22d3a0' : '#f56565' }}>
                             {active ? '● Active' : '● Inactive'}
                           </span>
                         </td>
@@ -221,7 +221,7 @@ export default function GravityPage({ projects }: Props) {
                             <div style={{ flex: 1, height: 6, background: 'rgba(255,255,255,0.07)', borderRadius: 3, overflow: 'hidden', minWidth: 60 }}>
                               <div style={{ width: `${share}%`, height: '100%', background: '#9f7aea', borderRadius: 3, transition: 'width 0.5s ease' }} />
                             </div>
-                            <span style={{ fontSize: 12, color: 'var(--text2)', fontWeight: 600, minWidth: 32 }}>{share}%</span>
+                            <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600, minWidth: 32 }}>{share}%</span>
                           </div>
                         </td>
                       </tr>
@@ -242,7 +242,7 @@ export default function GravityPage({ projects }: Props) {
                   <button key={tab.key} onClick={() => setStatusFilter(tab.key)}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 5,
-                      padding: '5px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                      padding: '5px 12px', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: 'pointer',
                       border: statusFilter === tab.key ? `1px solid ${tab.color}50` : '1px solid var(--border)',
                       background: statusFilter === tab.key ? `${tab.color}14` : 'transparent',
                       color: statusFilter === tab.key ? tab.color : 'var(--text3)',
@@ -250,7 +250,7 @@ export default function GravityPage({ projects }: Props) {
                     }}>
                     {tab.label}
                     {tab.count > 0 && (
-                      <span style={{ fontSize: 10, fontWeight: 700, padding: '1px 6px', borderRadius: 8, background: statusFilter === tab.key ? `${tab.color}25` : 'rgba(255,255,255,0.07)', color: statusFilter === tab.key ? tab.color : 'var(--text3)' }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, padding: '1px 6px', borderRadius: 8, background: statusFilter === tab.key ? `${tab.color}25` : 'rgba(255,255,255,0.07)', color: statusFilter === tab.key ? tab.color : 'var(--text3)' }}>
                         {tab.count}
                       </span>
                     )}
@@ -261,7 +261,7 @@ export default function GravityPage({ projects }: Props) {
 
             {/* Spam warning banner */}
             {statusFilter === 'spam' && filteredEntries.length > 0 && (
-              <div style={{ padding: '10px 18px', background: 'rgba(240,180,41,0.06)', borderBottom: '1px solid rgba(240,180,41,0.15)', display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#f0b429' }}>
+              <div style={{ padding: '10px 18px', background: 'rgba(240,180,41,0.06)', borderBottom: '1px solid rgba(240,180,41,0.15)', display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, color: '#f0b429' }}>
                 <span>⚠️</span>
                 <span>{statusCounts.spam} spam entr{statusCounts.spam === 1 ? 'y' : 'ies'} detected — showing from recent {allEntries.length} loaded</span>
               </div>
@@ -269,7 +269,7 @@ export default function GravityPage({ projects }: Props) {
 
             {/* Empty state for filter */}
             {filteredEntries.length === 0 && (
-              <div style={{ padding: '40px 20px', textAlign: 'center', fontSize: 13, color: 'var(--text3)' }}>
+              <div style={{ padding: '40px 20px', textAlign: 'center', fontSize: 15, color: 'var(--text3)' }}>
                 {statusFilter === 'all' ? 'No entries found' : `No ${statusFilter} entries in recent submissions`}
               </div>
             )}
@@ -277,11 +277,11 @@ export default function GravityPage({ projects }: Props) {
             {/* Entries table */}
             {filteredEntries.length > 0 && (
               <div style={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 15 }}>
                   <thead>
                     <tr>
                       {['Entry', 'Form', 'Date', 'Status', 'Source'].map(h => (
-                        <th key={h} style={{ padding: '9px 16px', textAlign: 'left', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg3)', borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
+                        <th key={h} style={{ padding: '9px 16px', textAlign: 'left', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg3)', borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
                       ))}
                     </tr>
                   </thead>
@@ -299,17 +299,17 @@ export default function GravityPage({ projects }: Props) {
                             {form?.title || `Form ${entry.form_id}`}
                           </td>
                           <td style={{ padding: '10px 16px', whiteSpace: 'nowrap' }}>
-                            <div style={{ fontSize: 12, color: 'var(--text2)' }}>
+                            <div style={{ fontSize: 14, color: 'var(--text2)' }}>
                               {new Date(entry.date_created).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                             </div>
-                            <div style={{ fontSize: 11, color: 'var(--text3)' }}>{timeAgo(entry.date_created)}</div>
+                            <div style={{ fontSize: 13, color: 'var(--text3)' }}>{timeAgo(entry.date_created)}</div>
                           </td>
                           <td style={{ padding: '10px 16px', whiteSpace: 'nowrap' }}>
-                            <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 10, background: st.bg, color: st.color }}>
+                            <span style={{ fontSize: 12, fontWeight: 700, padding: '3px 9px', borderRadius: 10, background: st.bg, color: st.color }}>
                               ● {st.label}
                             </span>
                           </td>
-                          <td style={{ padding: '10px 16px', fontSize: 11, color: 'var(--text3)', maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          <td style={{ padding: '10px 16px', fontSize: 13, color: 'var(--text3)', maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                             {sourcePath}
                           </td>
                         </tr>

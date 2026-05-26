@@ -25,7 +25,7 @@ export default function SettingsPage({ session }: Props) {
         <h1 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
           Settings
         </h1>
-        <p style={{ fontSize: 13, color: 'var(--text3)' }}>
+        <p style={{ fontSize: 15, color: 'var(--text3)' }}>
           Manage your account and preferences
         </p>
       </div>
@@ -44,11 +44,11 @@ export default function SettingsPage({ session }: Props) {
           </div>
           <div>
             <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>{session.user?.name}</div>
-            <div style={{ fontSize: 13, color: 'var(--text3)' }}>{session.user?.email}</div>
-            <div style={{ fontSize: 11, color: '#22d3a0', fontWeight: 600, marginTop: 4 }}>● Signed in with Google</div>
+            <div style={{ fontSize: 15, color: 'var(--text3)' }}>{session.user?.email}</div>
+            <div style={{ fontSize: 13, color: '#22d3a0', fontWeight: 600, marginTop: 4 }}>● Signed in with Google</div>
           </div>
         </div>
-        <div style={{ padding: '12px 14px', background: 'var(--bg3)', borderRadius: 8, fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>
+        <div style={{ padding: '12px 14px', background: 'var(--bg3)', borderRadius: 8, fontSize: 15, color: 'var(--text2)', lineHeight: 1.6 }}>
           💡 Your profile is managed through your Google account. To update your name or photo, update your Google account at <a href="https://myaccount.google.com" target="_blank" style={{ color: '#5b7fff' }}>myaccount.google.com</a>
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function SettingsPage({ session }: Props) {
         <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 16 }}>
           🎨 Appearance
         </div>
-        <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 10 }}>Theme</div>
+        <div style={{ fontSize: 14, color: 'var(--text3)', marginBottom: 10 }}>Theme</div>
         <div style={{ display: 'flex', gap: 10 }}>
           {[
             { id: 'dark', label: '🌙 Dark', desc: 'Easy on the eyes' },
@@ -70,7 +70,7 @@ export default function SettingsPage({ session }: Props) {
               style={{ flex: 1, padding: '14px 16px', background: theme === t.id ? 'rgba(91,127,255,0.12)' : 'var(--bg3)', border: `2px solid ${theme === t.id ? '#5b7fff' : 'var(--border)'}`, borderRadius: 10, cursor: 'pointer', transition: 'all 0.15s' }}
             >
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>{t.label}</div>
-              <div style={{ fontSize: 12, color: 'var(--text3)' }}>{t.desc}</div>
+              <div style={{ fontSize: 14, color: 'var(--text3)' }}>{t.desc}</div>
             </div>
           ))}
         </div>
@@ -90,15 +90,15 @@ export default function SettingsPage({ session }: Props) {
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>Google Account</div>
-              <div style={{ fontSize: 11, color: 'var(--text3)' }}>{session.user?.email}</div>
+              <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>Google Account</div>
+              <div style={{ fontSize: 13, color: 'var(--text3)' }}>{session.user?.email}</div>
             </div>
           </div>
-          <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 10, background: 'rgba(34,211,160,0.1)', color: '#22d3a0' }}>
+          <span style={{ fontSize: 13, fontWeight: 700, padding: '3px 10px', borderRadius: 10, background: 'rgba(34,211,160,0.1)', color: '#22d3a0' }}>
             ✓ Connected
           </span>
         </div>
-        <div style={{ marginTop: 10, padding: '10px 14px', background: 'var(--bg3)', borderRadius: 8, fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>
+        <div style={{ marginTop: 10, padding: '10px 14px', background: 'var(--bg3)', borderRadius: 8, fontSize: 14, color: 'var(--text3)', lineHeight: 1.6 }}>
           Your Google account gives NexGen read-only access to Search Console and GA4 data. We never modify or post anything on your behalf.
         </div>
       </div>
@@ -116,8 +116,8 @@ export default function SettingsPage({ session }: Props) {
           <div key={item.title} style={{ display: 'flex', gap: 12, padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
             <div style={{ fontSize: 20, flexShrink: 0 }}>{item.icon}</div>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 3 }}>{item.title}</div>
-              <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>{item.desc}</div>
+              <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 3 }}>{item.title}</div>
+              <div style={{ fontSize: 14, color: 'var(--text3)', lineHeight: 1.6 }}>{item.desc}</div>
             </div>
           </div>
         ))}
@@ -131,7 +131,7 @@ export default function SettingsPage({ session }: Props) {
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <button
             onClick={() => signOut({ callbackUrl: '/auth/login' })}
-            style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 18px', background: 'rgba(245,101,101,0.1)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 8, color: '#f56565', fontSize: 13, fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 18px', background: 'rgba(245,101,101,0.1)', border: '1px solid rgba(245,101,101,0.3)', borderRadius: 8, color: '#f56565', fontSize: 15, fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s' }}
             onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,101,101,0.2)'}
             onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,101,101,0.1)'}
           >
