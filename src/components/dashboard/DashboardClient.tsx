@@ -101,6 +101,7 @@ export default function DashboardClient({ session }: Props) {
             navTo('presentation', selectedProject)
           }}
           onSignOut={() => signOut({ callbackUrl: '/auth/login' })}
+          navTo={navTo}
         />
 
         <div style={styles.content}>
@@ -133,8 +134,8 @@ export default function DashboardClient({ session }: Props) {
             <PresentationPage project={selectedProject} projects={projects} session={session} onSelectProject={setSelectedProject} />
           )}
           {page === 'settings' && <SettingsPage session={session} />}
-          {page === 'team' && selectedProject && (
-            <TeamPage project={selectedProject} session={session} />
+          {page === 'team' && (
+            <TeamPage projects={projects} project={selectedProject} session={session} onViewSite={viewSite} />
           )}
         </div>
       </div>

@@ -26,6 +26,25 @@ const TOOLTIP_STYLE = {
   color: 'var(--text)',
 }
 
+function calcTrend(series: any[], key: string): number | null {
+  if (!series || series.length < 4) return null
+  const mid = Math.floor(series.length / 2)
+  const prev = series.slice(0, mid).reduce((s, r) => s + (r[key] || 0), 0)
+  const curr = series.slice(mid).reduce((s, r) => s + (r[key] || 0), 0)
+  if (prev === 0) return null
+  return +((curr - prev) / prev * 100).toFixed(1)
+}
+
+function TrendBadge({ pct }: { pct: number | null }) {
+  if (pct === null) return null
+  const up = pct >= 0
+  return (
+    <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 6px', borderRadius: 6, background: up ? 'rgba(34,211,160,0.1)' : 'rgba(245,101,101,0.1)', color: up ? '#22d3a0' : '#f56565' }}>
+      {up ? '▲' : '▼'} {Math.abs(pct)}%
+    </span>
+  )
+}
+
 export default function GA4Page({ projects }: Props) {
   const ga4Projects = projects.filter(p => p.integrations?.ga4?.connected)
   const [selected, setSelected] = useState(ga4Projects[0]?.id || '')
@@ -49,8 +68,16 @@ export default function GA4Page({ projects }: Props) {
       .finally(() => setLoading(false))
   }, [selected, days]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const trends = data ? {
+    sessions:   calcTrend(data.timeSeries, 'sessions'),
+    users:      calcTrend(data.timeSeries, 'users'),
+    newUsers:   calcTrend(data.timeSeries, 'newUsers'),
+    bounceRate: calcTrend(data.timeSeries, 'bounceRate'),
+    conversions:calcTrend(data.timeSeries, 'conversions'),
+  } : null
+
   return (
-    <div>
+    <div className="fade-in">
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
         <div>
@@ -97,17 +124,18 @@ export default function GA4Page({ projects }: Props) {
           {/* Metric cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 12, marginBottom: 20 }}>
             {[
-              { label: 'Sessions', value: data.summary.sessions.toLocaleString(), color: '#f97316' },
-              { label: 'Users', value: data.summary.users.toLocaleString(), color: '#f0b429' },
-              { label: 'New Users', value: data.summary.newUsers.toLocaleString(), color: '#22d3a0' },
-              { label: 'Bounce Rate', value: data.summary.bounceRate + '%', color: '#f56565' },
-              { label: 'Conversions', value: data.summary.conversions.toLocaleString(), color: '#9f7aea' },
-              { label: 'Conv. Rate', value: data.summary.convRate + '%', color: '#5b7fff' },
+              { label: 'Sessions',     value: data.summary.sessions.toLocaleString(),     color: '#f97316', trend: trends?.sessions },
+              { label: 'Users',        value: data.summary.users.toLocaleString(),         color: '#f0b429', trend: trends?.users },
+              { label: 'New Users',    value: data.summary.newUsers.toLocaleString(),      color: '#22d3a0', trend: trends?.newUsers },
+              { label: 'Bounce Rate',  value: data.summary.bounceRate + '%',               color: '#f56565', trend: trends?.bounceRate !== null && trends?.bounceRate !== undefined ? -(trends!.bounceRate!) : null },
+              { label: 'Conversions',  value: data.summary.conversions.toLocaleString(),   color: '#9f7aea', trend: trends?.conversions },
+              { label: 'Conv. Rate',   value: data.summary.convRate + '%',                 color: '#5b7fff', trend: null },
             ].map(s => (
               <div key={s.label} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: 16, position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2.5, background: s.color }} />
                 <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 7 }}>{s.label}</div>
-                <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 24, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>{s.value}</div>
+                <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 24, fontWeight: 700, color: 'var(--text)', lineHeight: 1, marginBottom: 8 }}>{s.value}</div>
+                <TrendBadge pct={s.trend ?? null} />
               </div>
             ))}
           </div>
