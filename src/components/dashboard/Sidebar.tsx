@@ -130,31 +130,8 @@ export default function Sidebar({ page, navTo, sidebarOpen, projectCount, onAddS
         ))}
       </nav>
 
-      {/* ── Plan badge ── */}
+      {/* ── Bottom actions ── */}
       <div style={{ padding: '10px 10px 6px', borderTop: `1px solid ${border}` }}>
-        <div style={{ background: dark ? 'rgba(91,127,255,0.06)' : 'rgba(91,127,255,0.04)', border: `1px solid rgba(91,127,255,0.15)`, borderRadius: 10, padding: '10px 12px', marginBottom: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#22d3a0', boxShadow: '0 0 6px rgba(34,211,160,0.6)', flexShrink: 0 }} />
-              <span style={{ fontSize: 11, fontWeight: 700, color: dark ? '#e4e7f0' : '#0d0f14' }}>Free Plan</span>
-            </div>
-            <span style={{ fontSize: 9, fontWeight: 700, padding: '2px 6px', borderRadius: 6, background: 'rgba(91,127,255,0.15)', color: '#5b7fff', letterSpacing: '0.05em' }}>BETA</span>
-          </div>
-          <div style={{ fontSize: 10, color: text3, marginBottom: 7, lineHeight: 1.5 }}>
-            {projectCount}/3 sites used
-          </div>
-          <div style={{ height: 3, borderRadius: 2, background: dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.08)', marginBottom: 8 }}>
-            <div style={{ height: '100%', borderRadius: 2, background: 'linear-gradient(90deg,#5b7fff,#9f7aea)', width: `${Math.min(100, (projectCount / 3) * 100)}%`, transition: 'width 0.6s ease' }} />
-          </div>
-          <button
-            style={{ width: '100%', padding: '5px 0', borderRadius: 6, background: 'linear-gradient(135deg,#5b7fff,#9f7aea)', color: '#fff', fontSize: 11, fontWeight: 700, border: 'none', cursor: 'pointer', letterSpacing: '0.03em', transition: 'opacity 0.15s' }}
-            onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.opacity = '0.85'}
-            onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.opacity = '1'}
-          >
-            Upgrade to Pro →
-          </button>
-        </div>
-
         {/* Add site button */}
         <button
           onClick={onAddSite}

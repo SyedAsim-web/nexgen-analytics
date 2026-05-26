@@ -340,19 +340,6 @@ export default function TeamPage({ projects, project, session, onViewSite }: Pro
               })}
             </div>
 
-            {/* Plan limit info */}
-            <div style={{ background: 'rgba(91,127,255,0.05)', border: '1px solid rgba(91,127,255,0.15)', borderRadius: 14, padding: 16 }}>
-              <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 7 }}>
-                <svg width="14" height="14" fill="none" stroke="#5b7fff" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                Free Plan: Up to 2 members
-              </div>
-              <p style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 12 }}>
-                Upgrade to Pro for unlimited team members, advanced role controls, and audit logs.
-              </p>
-              <button style={{ width: '100%', padding: '8px', background: 'linear-gradient(135deg,#5b7fff,#9f7aea)', color: '#fff', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
-                ✦ Upgrade to Pro
-              </button>
-            </div>
           </div>
         </div>
       )}

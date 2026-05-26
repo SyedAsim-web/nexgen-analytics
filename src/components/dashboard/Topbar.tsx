@@ -120,7 +120,7 @@ export default function Topbar({ session, page, theme, toggleTheme, onHamburger,
               <div style={{ fontSize: 12, fontWeight: 600, color: dark ? '#e4e7f0' : '#0d0f14', lineHeight: 1.2 }}>
                 {session.user?.name?.split(' ')[0]}
               </div>
-              <div style={{ fontSize: 10, color: text3, lineHeight: 1.2 }}>Free Plan</div>
+              <div style={{ fontSize: 10, color: text3, lineHeight: 1.2 }}>NexGen Analytics</div>
             </div>
             <svg width="12" height="12" fill="none" stroke={text3} strokeWidth="2" viewBox="0 0 24 24" style={{ transition: 'transform 0.2s', transform: dropOpen ? 'rotate(180deg)' : 'rotate(0)' }}>
               <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -140,10 +140,6 @@ export default function Topbar({ session, page, theme, toggleTheme, onHamburger,
               <div style={{ padding: '14px 14px 10px', borderBottom: `1px solid ${border}` }}>
                 <div style={{ fontSize: 13, fontWeight: 700, color: dark ? '#e4e7f0' : '#0d0f14', marginBottom: 2 }}>{session.user?.name}</div>
                 <div style={{ fontSize: 11, color: text3 }}>{session.user?.email}</div>
-                <div style={{ marginTop: 8, display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 8px', background: 'rgba(34,211,160,0.08)', border: '1px solid rgba(34,211,160,0.2)', borderRadius: 6 }}>
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#22d3a0', display: 'inline-block' }} />
-                  <span style={{ fontSize: 10, fontWeight: 700, color: '#22d3a0' }}>Free Plan · Beta Access</span>
-                </div>
               </div>
 
               {/* Nav items */}
@@ -160,13 +156,6 @@ export default function Topbar({ session, page, theme, toggleTheme, onHamburger,
                   {item.label}
                 </button>
               ))}
-
-              {/* Upgrade CTA */}
-              <div style={{ padding: '8px 10px', borderTop: `1px solid ${border}` }}>
-                <button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', padding: '8px', borderRadius: 8, background: 'linear-gradient(135deg,#5b7fff,#9f7aea)', color: '#fff', fontSize: 12, fontWeight: 700, border: 'none', cursor: 'pointer' }}>
-                  ✦ Upgrade to Pro
-                </button>
-              </div>
 
               {/* Sign out */}
               <div style={{ padding: '6px 10px 10px' }}>
