@@ -11,6 +11,7 @@ import GSCPage from './pages/GSCPage'
 import GA4Page from './pages/GA4Page'
 import GHLPage from './pages/GHLPage'
 import GravityPage from './pages/GravityPage'
+import SemrushPage from './pages/SemrushPage'
 import PresentationPage from './pages/PresentationPage'
 import SettingsPage from './pages/SettingsPage'
 import TeamPage from './pages/TeamPage'
@@ -19,7 +20,7 @@ import { Project } from '@/types'
 
 interface Props { session: Session }
 
-export type PageName = 'dashboard' | 'sites' | 'site-detail' | 'gsc' | 'ga4' | 'ghl' | 'gravity' | 'presentation' | 'settings' | 'team'
+export type PageName = 'dashboard' | 'sites' | 'site-detail' | 'gsc' | 'ga4' | 'ghl' | 'gravity' | 'semrush' | 'presentation' | 'settings' | 'team'
 
 export default function DashboardClient({ session }: Props) {
   const [page, setPage] = useState<PageName>('dashboard')
@@ -135,6 +136,7 @@ export default function DashboardClient({ session }: Props) {
           {page === 'ga4' && <GA4Page projects={projects} session={session} />}
           {page === 'ghl' && <GHLPage projects={projects} />}
           {page === 'gravity' && <GravityPage projects={projects} />}
+          {page === 'semrush' && <SemrushPage projects={projects} />}
           {page === 'presentation' && (
             <PresentationPage project={selectedProject} projects={projects} session={session} onSelectProject={setSelectedProject} />
           )}

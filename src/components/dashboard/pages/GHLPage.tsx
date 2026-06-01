@@ -4,6 +4,14 @@ import { Project } from '@/types'
 
 interface Props { projects: Project[] }
 
+function downloadCSV(rows: any[], filename: string) {
+  if (!rows.length) return
+  const headers = Object.keys(rows[0])
+  const csv = [headers.join(','), ...rows.map(r => headers.map(h => JSON.stringify(r[h] ?? '')).join(','))].join('\n')
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([csv], { type: 'text/csv' })), download: filename })
+  a.click()
+}
+
 export default function GHLPage({ projects }: Props) {
   const ghlProjects = projects.filter(p => p.integrations?.ghl?.connected)
   const [selected, setSelected] = useState(ghlProjects[0]?.id || '')
@@ -39,17 +47,24 @@ export default function GHLPage({ projects }: Props) {
             Voice AI calls · Live chat conversations · Lead pipeline
           </p>
         </div>
-        {ghlProjects.length > 0 && (
-          <select
-            value={selected}
-            onChange={e => setSelected(e.target.value)}
-            style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}
-          >
-            {ghlProjects.map(p => (
-              <option key={p.id} value={p.id}>{p.name}</option>
-            ))}
-          </select>
-        )}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {ghlProjects.length > 0 && (
+            <select value={selected} onChange={e => setSelected(e.target.value)}
+              style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
+              {ghlProjects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+            </select>
+          )}
+          {data && (
+            <button onClick={() => {
+              if (data.calls?.length) downloadCSV(data.calls.map((c: any) => ({ Date: c.dateAdded, Contact: c.contactName, Duration: c.duration, Direction: c.direction, Status: c.status })), 'ghl-calls.csv')
+              if (data.opportunities?.length) downloadCSV(data.opportunities.map((o: any) => ({ Name: o.name, Contact: o.contact, Stage: o.stage, Value: o.monetaryValue, Status: o.status })), 'ghl-opportunities.csv')
+            }}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text2)', fontSize: 15, fontWeight: 500, cursor: 'pointer' }}>
+              <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export CSV
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Not connected */}

@@ -31,6 +31,8 @@ export default function SiteDetailPage({ project, session, onBack, onPresent, on
     wp_key: project.integrations?.gravity?.api_key || '',
     wp_ck: project.integrations?.gravity?.consumer_key || '',
     wp_cs: project.integrations?.gravity?.consumer_secret || '',
+    semrush_key: project.integrations?.semrush?.api_key || '',
+    semrush_db: project.integrations?.semrush?.database || 'us',
   })
   const [teamEmail, setTeamEmail] = useState('')
   const [teamRole, setTeamRole] = useState('viewer')
@@ -109,6 +111,7 @@ const saveIntegration = async (platform: string, config: any) => {
               { key: 'ga4', label: 'GA4 Analytics', icon: '📈', color: '#f97316' },
               { key: 'ghl', label: 'GHL Voice AI', icon: '🤖', color: '#22d3a0' },
               { key: 'gravity', label: 'Gravity Forms', icon: '📋', color: '#9f7aea' },
+              { key: 'semrush', label: 'SEMrush', icon: '📊', color: '#ff6d3b' },
             ].map(int => {
               const connected = (project.integrations as any)?.[int.key]?.connected
               const lastSync = (project.integrations as any)?.[int.key]?.last_sync
@@ -235,6 +238,22 @@ const saveIntegration = async (platform: string, config: any) => {
               api_key: `${integForm.wp_ck}:${integForm.wp_cs}`
             })}
             helpText="WordPress → Forms → Settings → REST API → Add Key → copy Consumer Key (ck_) and Consumer Secret (cs_) separately."
+          />
+          <IntegCard
+            title="SEMrush"
+            icon="📊"
+            color="#ff6d3b"
+            connected={project.integrations?.semrush?.connected || false}
+            description="Connect SEMrush to track organic keyword rankings, estimated traffic, backlinks, authority score and competitor analysis for this domain."
+            fields={[
+              { key: 'semrush_key', label: 'API Key', placeholder: 'Your SEMrush API key', type: 'password' },
+              { key: 'semrush_db', label: 'Default Database (Region)', placeholder: 'us' },
+            ]}
+            form={integForm}
+            setForm={setIntegForm}
+            saving={saving === 'semrush'}
+            onSave={() => saveIntegration('semrush', { api_key: integForm.semrush_key, database: integForm.semrush_db || 'us' })}
+            helpText="SEMrush → top-right account menu → Subscription info → API units → copy your API Key."
           />
         </div>
       )}

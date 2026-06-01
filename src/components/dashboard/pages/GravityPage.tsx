@@ -45,6 +45,14 @@ function statusStyle(status: string) {
   return STATUS_CONFIG[status] ?? { label: status, bg: 'rgba(255,255,255,0.07)', color: 'var(--text3)' }
 }
 
+function downloadCSV(rows: any[], filename: string) {
+  if (!rows.length) return
+  const headers = Object.keys(rows[0])
+  const csv = [headers.join(','), ...rows.map(r => headers.map(h => JSON.stringify(r[h] ?? '')).join(','))].join('\n')
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([csv], { type: 'text/csv' })), download: filename })
+  a.click()
+}
+
 function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime()
   const mins = Math.floor(diff / 60000)
@@ -126,6 +134,19 @@ export default function GravityPage({ projects }: Props) {
               style={{ padding: '8px 12px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontSize: 15, outline: 'none', cursor: 'pointer' }}>
               {gravityProjects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
             </select>
+          )}
+          {data && (
+            <button onClick={() => {
+              const rows = (data.entries || []).map((e: any) => ({
+                ID: e.id, Form: data.forms.find((f: any) => String(f.id) === String(e.form_id))?.title || e.form_id,
+                Date: e.date_created, Status: e.status, IP: e.ip, Source: e.source_url,
+              }))
+              downloadCSV(rows, 'gravity-entries.csv')
+            }}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text2)', fontSize: 15, fontWeight: 500, cursor: 'pointer' }}>
+              <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export CSV
+            </button>
           )}
         </div>
       </div>

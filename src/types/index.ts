@@ -18,6 +18,7 @@ export interface Project {
     ga4?: { measurement_id: string; property_id: string; connected: boolean; last_sync?: string }
     ghl?: { location_id: string; api_key: string; connected: boolean; last_sync?: string }
     gravity?: { site_url: string; api_key?: string; consumer_key?: string; consumer_secret?: string; connected: boolean; last_sync?: string }
+    semrush?: { api_key: string; database?: string; connected: boolean; last_sync?: string }
   }
 }
 

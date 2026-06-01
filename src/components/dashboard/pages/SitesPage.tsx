@@ -9,6 +9,7 @@ const INTEG_LABELS: Record<string, { label: string; color: string; bg: string }>
   ga4:     { label: 'GA4',     color: '#f97316', bg: 'rgba(249,115,22,0.12)' },
   ghl:     { label: 'GHL',     color: '#22d3a0', bg: 'rgba(34,211,160,0.12)' },
   gravity: { label: 'Gravity', color: '#9f7aea', bg: 'rgba(159,122,234,0.12)' },
+  semrush: { label: 'SEMrush', color: '#ff6d3b', bg: 'rgba(255,109,59,0.12)' },
 }
 
 export default function SitesPage({ projects, loading, onViewSite, onAddSite, onRefresh, onDeleteSite }: Props) {
@@ -96,7 +97,7 @@ function SiteCard({ project: p, onClick, onDelete }: { project: Project; onClick
   const [confirm, setConfirm] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const integ = p.integrations || {}
-  const connected = ['gsc', 'ga4', 'ghl', 'gravity'].filter(k => (integ as any)[k]?.connected)
+  const connected = ['gsc', 'ga4', 'ghl', 'gravity', 'semrush'].filter(k => (integ as any)[k]?.connected)
   const initials = (p.name || p.domain).split(/\s+/).map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()
   const connCount = connected.length
 
@@ -161,7 +162,7 @@ function SiteCard({ project: p, onClick, onDelete }: { project: Project; onClick
 
       {/* Integration badges */}
       <div style={{ display: 'flex', gap: 5, marginBottom: 14, flexWrap: 'wrap' }}>
-        {(['gsc', 'ga4', 'ghl', 'gravity'] as const).map(k => {
+        {(['gsc', 'ga4', 'ghl', 'gravity', 'semrush'] as const).map(k => {
           const on = (integ as any)[k]?.connected
           const cfg = INTEG_LABELS[k]
           return (
@@ -182,9 +183,9 @@ function SiteCard({ project: p, onClick, onDelete }: { project: Project; onClick
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 12, borderTop: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <div style={{ height: 4, width: 60, borderRadius: 2, background: 'var(--bg4)', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${(connCount / 4) * 100}%`, background: connCount === 4 ? '#22d3a0' : connCount >= 2 ? '#5b7fff' : '#f0b429', borderRadius: 2, transition: 'width 0.4s ease' }} />
+            <div style={{ height: '100%', width: `${(connCount / 5) * 100}%`, background: connCount === 5 ? '#22d3a0' : connCount >= 2 ? '#5b7fff' : '#f0b429', borderRadius: 2, transition: 'width 0.4s ease' }} />
           </div>
-          <span style={{ fontSize: 13, color: 'var(--text3)' }}>{connCount}/4 connected</span>
+          <span style={{ fontSize: 13, color: 'var(--text3)' }}>{connCount}/5 connected</span>
         </div>
         <span style={{ fontSize: 14, color: '#5b7fff', fontWeight: 600 }}>View →</span>
       </div>

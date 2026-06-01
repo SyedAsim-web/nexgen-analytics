@@ -107,12 +107,31 @@ export async function GET(req: NextRequest) {
       getEntries(`${base}/wp-json/gf/v2/entries?status=trash&paging[page_size]=20&sorting[key]=date_created&sorting[direction]=DESC&${noDate()}`),
     ])
 
-    // Tag each entry with its known status (GF API doesn't always include it in the entry object)
-    const taggedActive = activeEntries.map((e: any) => ({ ...e, status: 'active' }))
-    const taggedSpam   = spamEntries.map((e: any)   => ({ ...e, status: 'spam'   }))
-    const taggedTrash  = trashEntries.map((e: any)  => ({ ...e, status: 'trash'  }))
+    // GF REST API: total_count is reliable; entries array may ignore ?status= in some installs.
+    // Strategy: deduplicate by ID; resolve status using e.status when definitive (spam/trash),
+    // then fall back to which buckets the entry appeared in.
+    const spamIds  = new Set(spamEntries.map((e: any)  => String(e.id)))
+    const trashIds = new Set(trashEntries.map((e: any) => String(e.id)))
 
-    const merged = [...taggedActive, ...taggedSpam, ...taggedTrash]
+    const resolveStatus = (e: any): string => {
+      if (e.status === 'spam')  return 'spam'
+      if (e.status === 'trash') return 'trash'
+      if (e.status === 'read' || e.status === 'active') return 'active'
+      // status missing — fall back to bucket membership (works when GF DOES filter)
+      if (spamIds.has(String(e.id)))  return 'spam'
+      if (trashIds.has(String(e.id))) return 'trash'
+      return 'active'
+    }
+
+    const seen = new Set<string>()
+    const merged = [...activeEntries, ...spamEntries, ...trashEntries]
+      .filter((e: any) => {
+        const key = String(e.id)
+        if (seen.has(key)) return false
+        seen.add(key)
+        return true
+      })
+      .map((e: any) => ({ ...e, status: resolveStatus(e) }))
       .sort((a, b) => new Date(b.date_created).getTime() - new Date(a.date_created).getTime())
 
     return NextResponse.json({
